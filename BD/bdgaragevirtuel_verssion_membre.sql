@@ -58,28 +58,6 @@ CREATE TABLE `adresses` (
 -- Déchargement des données de la table `adresses`
 --
 
-INSERT INTO `adresses` (`idAdresse`, `idMembre`, `numeroCivique`, `nomRue`, `ville`, `codePostal`, `region`, `latitude`, `longitude`) VALUES
-(1, 1, 12, 'Natalia Panfilii', 'Mont-Royal', '', 'QC', NULL, NULL),
-(2, 2, 12, 'Natalia Panfilii', 'Mont-Royal', '', 'QC', NULL, NULL),
-(3, 3, 23, 'Acadie', 'Montreal', 'H3R3L2', 'Qc', '45.518729500', '-73.654724700'),
-(4, 4, 25, 'Acadie', 'Laval', 'H1H1H1', 'La', NULL, NULL),
-(5, 5, 23, 'Natalia Panfilii', 'Mont-Royal', 'H3R-3L2', 'QC', '45.518729500', '-73.654724700'),
-(6, 7, 12, 'Natalia', 'Mont-Royal', 'H3R-3L2', 'QC', '45.518729500', '-73.654724700'),
-(7, 8, 12, 'Natalia', 'Mont-Royal', 'H3R 3L2', 'QC', '45.518729500', '-73.654724700'),
-(8, 16, 12, 'cftydryt', 'xfghxf', 'H3R-3L2', 'gfghxf', '45.518729500', '-73.654724700'),
-(9, 17, 12, 'Natalia Panfilii', 'Mont-Royal', 'H3R-3L2', 'QC', '45.518729500', '-73.654724700'),
-(10, 18, 12, 'Natalia ', 'Mont-Royal', 'H3R-3L2', 'QC', '45.518729500', '-73.654724700'),
-(11, 19, 12, 'Natalia Panfilii', 'Mont-Royal', 'H3R3L2', 'QC', '45.518729500', '-73.654724700'),
-(12, 20, 12, 'Natalia Panfilii', 'Mont-Royal', 'H3R-3L2', 'QC', '45.518729500', '-73.654724700'),
-(13, 21, 12, 'Natalia Panfilii', 'Mont-Royal', 'H3R3L2', 'QC', '45.518729500', '-73.654724700'),
-(14, 22, 12, 'Natalia Panfilii', 'Mont-Royal', 'H3R3L2', 'QC', '45.518729500', '-73.654724700'),
-(15, 24, 12, 'Glengarry', 'Mont-Royal', 'H3R3L2', 'QC', '45.518729500', '-73.654724700'),
-(16, 26, 23, 'acadie', 'Mont-Royal', 'H3R3L2', 'QC', '45.518729500', '-73.654724700'),
-(17, 27, 11, 'Natalia', 'Mont-Royal', 'H3R3L2', 'QC', '45.518729500', '-73.654724700'),
-(18, 29, 12, 'Natalia', 'Mont-Royal', 'H3R3L2', 'QC', '45.518729500', '-73.654724700'),
-(19, 30, 12, 'Glengarry', 'Montreal', 'H3R3L2', 'QC', '45.518729500', '-73.654724700'),
-(20, 31, 25, 'Acadie', 'Montreal', 'H2K2K1', 'Qc', '45.529729700', '-73.545975300'),
-(21, 32, 25, 'Hubert', 'Trois Rivier', 'H3R3L2', 'Qc', '45.518729500', '-73.654724700');
 
 -- --------------------------------------------------------
 
@@ -116,25 +94,21 @@ INSERT INTO `categories` (`idCategorie`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `connexions`
+-- Structure de la table `messages`
 --
 
-CREATE TABLE `connexions` (
-  `idMembre` int(11) NOT NULL,
-  `courriel` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `motPasse` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL
+CREATE TABLE `messages` (
+  `idMessages` int(11) NOT NULL,
+  `idMembre` int(11) DEFAULT NULL,
+  `idEnvoyeur` int(11) DEFAULT NULL,
+  `sujet` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `messages` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `dateMessages` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Déchargement des données de la table `connexions`
+-- Déchargement des données de la table `messages`
 --
-
-INSERT INTO `connexions` (`idMembre`, `courriel`, `motPasse`) VALUES
-(3, 'delia@yahoo.com', '67b7dc54f86a48e0679841bb490a26657975b1d7'),
-(4, 'maria@yahoo.com', '396f32a0e2e530a3d6c895fcab609e4a614e12f9'),
-(1, 'nataliapanfi@gmail.com', '67b7dc54f86a48e0679841bb490a26657975b1d7'),
-(2, 'nataliapanfilii86@gmail.com', 'da39a3ee5e6b4b0d3255bfef95601890afd80709'),
-(7, 'pan@yahoo.com', '396f32a0e2e530a3d6c895fcab609e4a614e12f9');
 
 -- --------------------------------------------------------
 
@@ -147,11 +121,9 @@ CREATE TABLE `evenements` (
   `titreEvenement` varchar(150) CHARACTER SET latin1 NOT NULL,
   `description` varchar(255) CHARACTER SET latin1 NOT NULL,
   `idAdresse` int(8) NOT NULL,
-  `idProduit` int(8) NOT NULL,
   `dateDebut` datetime NOT NULL,
   `dateFin` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 
 -- --------------------------------------------------------
 
@@ -168,33 +140,14 @@ CREATE TABLE `membres` (
   `sexe` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `photoMembre` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `courriel` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `motPasse` varchar(100) COLLATE utf8_unicode_ci NOT NULL
+  `motPasse` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `statut` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `dateInscription` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Déchargement des données de la table `membres`
 --
-
-INSERT INTO `membres` (`idMembre`, `prenom`, `nom`, `telephone`, `dateNaissance`, `sexe`, `photoMembre`, `courriel`, `motPasse`) VALUES
-(13, 'zdsdfsf', 'zxfdgzd', '5147894561', '02/12/1234', 'M', 'avatar.jpg', 'nataliapa@gmail.com', 'da39a3ee5e6b4b0d3255bfef95601890afd80709'),
-(14, 'sdfgsd', 'dfhgsf', '5147894561', '12/12/1234', 'M', 'avatar.jpg', 'delia@yahoo.com', 'da39a3ee5e6b4b0d3255bfef95601890afd80709'),
-(15, 'nbvgvhg', 'hdgdg', '5146547896', '', 'M', 'avatar.jpg', 'nataliapanfilii85@gmail.com', 'da39a3ee5e6b4b0d3255bfef95601890afd80709'),
-(16, 'xghxfh', 'fhxc', '5147894563', '02/13/1988', 'M', 'avatar.jpg', 'deliay@yahoo.com', 'fdcca43175c6c3da4542836cb553cf4d2bd66b4a'),
-(17, 'sbvsvdbv', 'xdjgzfjdhfzh', '', '', 'M', 'avatar.jpg', 'nataliapanfilii@yahoo.com', 'da39a3ee5e6b4b0d3255bfef95601890afd80709'),
-(18, 'zdsfsf', 'djhfszhf', '5146919845', '', 'M', 'avatar.jpg', 'nataliapanfilii86@gmail.com', 'da39a3ee5e6b4b0d3255bfef95601890afd80709'),
-(19, 'srtsrter', 'srtsrt', '5146919845', '12/12/2017', 'M', 'avatar.jpg', 'nataliapanfilii@gmail.com', 'fdcca43175c6c3da4542836cb553cf4d2bd66b4a'),
-(20, 'sdfsfa', 'xfgdfgs', '5146918745', '12/12/1234', 'M', 'avatar.jpg', 'nataliapanfilii89@gmail.com', 'da39a3ee5e6b4b0d3255bfef95601890afd80709'),
-(21, 'sdrtdet', 'dfgdg', '', '', 'M', 'avatar.jpg', 'nataliapanfilii87@mail.com', 'da39a3ee5e6b4b0d3255bfef95601890afd80709'),
-(22, 'fgfg', 'hgfhgf', '', '', 'M', 'avatar.jpg', 'nataliapanfilii877@gmail.com', 'da39a3ee5e6b4b0d3255bfef95601890afd80709'),
-(23, 'fgfg', 'hgfhgf', '', '', 'M', 'avatar.jpg', 'nataliapanfilii77@gmail.com', 'da39a3ee5e6b4b0d3255bfef95601890afd80709'),
-(24, 'Eugeniu', 'Panfilii', '5146997845', '28/03/1987', 'M', 'avatar.jpg', 'eugen@yahoo.com', 'fdcca43175c6c3da4542836cb553cf4d2bd66b4a'),
-(26, 'Delia', 'Panfilii', '', '', 'M', 'avatar.jpg', 'deluta@yahoo.com', 'da39a3ee5e6b4b0d3255bfef95601890afd80709'),
-(27, 'dfgdgzsdg', 'dfdzfz', '', '', 'M', 'avatar.jpg', 'natalia@yahoo.com', 'da39a3ee5e6b4b0d3255bfef95601890afd80709'),
-(28, NULL, NULL, NULL, NULL, NULL, NULL, 'admin', ''),
-(29, 'Magdalena', 'Mariana', '5146984561', '02/03/1999', 'M', 'avatar.jpg', 'nataliapanfilii81@gmail.com', 'fdcca43175c6c3da4542836cb553cf4d2bd66b4a'),
-(30, 'Natalia', 'Jabinschi', '5147894561', '02/12/1789', 'M', 'd64136b42cc73a27f004873d2f3aa6901bf08ae7.jpg', 'natynela@yahoo.com', 'fdcca43175c6c3da4542836cb553cf4d2bd66b4a'),
-(31, 'Lipceanu', 'Mariana', '51478945623', '02/05/1988', 'F', 'e299e7535a72426c3bb6eaec06345f3d85312f85.jpg', 'mariana@yahoo.com', 'fdcca43175c6c3da4542836cb553cf4d2bd66b4a'),
-(32, 'Alexandra', 'Jambina', '5147894561', '02/05/1789', 'F', '4fb541d7f2b1ead372ab3221e17956888dd8a64e.jpg', 'alexandra@yahoo.com', 'fdcca43175c6c3da4542836cb553cf4d2bd66b4a');
 
 -- --------------------------------------------------------
 
@@ -263,11 +216,11 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`idCategorie`);
 
 --
--- Index pour la table `connexions`
+-- Index pour la table `messages`
 --
-ALTER TABLE `connexions`
-  ADD UNIQUE KEY `courriel` (`courriel`),
-  ADD KEY `connexions_ibfk_` (`idMembre`);
+ALTER TABLE `messages`
+  ADD UNIQUE KEY `idMessages` (`idMessages`),
+  ADD KEY `messages_ibfk_` (`idMembre`);
 
 --
 -- Index pour la table `evenements`
@@ -320,7 +273,7 @@ ALTER TABLE `abonnements`
 -- AUTO_INCREMENT pour la table `adresses`
 --
 ALTER TABLE `adresses`
-  MODIFY `idAdresse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idAdresse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT pour la table `categories`
 --
@@ -335,7 +288,9 @@ ALTER TABLE `evenements`
 -- AUTO_INCREMENT pour la table `membres`
 --
 ALTER TABLE `membres`
-  MODIFY `idMembre` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `idMembre` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `messages`
+MODIFY `idMessages` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT pour la table `photoproduits`
 --
@@ -362,12 +317,9 @@ ALTER TABLE `adresses`
   ADD CONSTRAINT `adresses_ibfk_2` FOREIGN KEY (`idMembre`) REFERENCES `membres` (`idMembre`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `connexions`
+-- Contraintes pour la table `messages`
 --
-ALTER TABLE `connexions`
-  ADD CONSTRAINT `connexions_ibfk_1` FOREIGN KEY (`idMembre`) REFERENCES `membres` (`idMembre`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `messages`
+  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`idMembre`) REFERENCES `membres` (`idMembre`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
