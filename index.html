@@ -13,10 +13,16 @@
 	<link href="color/default.css" rel="stylesheet">
 	<link rel="shortcut icon" href="img/favicon.ico">	
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--------------------------- Membre links ------------------------------>
 	<script language="javascript" src="js/membre.js"></script>
 	<script language="javascript" src="Membres/membresRequetes.js"></script>
 	<script language="javascript" src="Membres/membresControleurVue.js"></script>
-	<script language="javascript" src="js/jquery-3.3.1.min.js"></script><!--------------------------- jquery pour MVC ------------------------------>
+	<script language="javascript" src="js/jquery-3.3.1.min.js"></script>
+    <!--------------------------- Location links ------------------------------>
+    <script src="location/global.js"></script>
+    <script language="javascript" src="location/locationRequetes.js"></script>    
+    <script language="javascript" src="location/locationControleurVue.js"></script>
+    <!---------------------------  ------------------------------>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-- Ca me bloc a l'affisage de cart user!!!!>
 	<!-- =======================================================
@@ -65,13 +71,13 @@
                 <form class="form-inline">
                     <div class="form-group">
                     	 <label >Province</label>
-                            <select class="form-control" placeholder="Province">
+                            <select id="idLocalite" class="form-control" placeholder="Province">
                                 <option value="">All</option>
                                 <option value="">Province 1</option>
                                 <option value="">Province 2</option>
                             </select>
-                        <label class="control-label">Ville</label>
-                            <select class="form-control" placeholder="City">
+                        <label idclass="control-label">Ville</label>
+                            <select id="idVille" class="form-control" placeholder="City">
                                 <option value="">All</option>
                                 <option value="">City 1</option>
                                 <option value="">City 2</option>

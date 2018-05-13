@@ -305,3 +305,7 @@ Popup style
 	}
 }
 /*-- //login --*/
+ hr.{ 
+            margin-top: -3px;
+            margin-bottom: 0px;
+        }

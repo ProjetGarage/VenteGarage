@@ -21,7 +21,8 @@ class Connexion{
 	   try {
 		  $dns = "mysql:host=$this->serveur;dbname=$this->baseDonnees";
 		  $options = array(
-			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"
 		  );
 		  $this->connexion = new PDO( $dns, $this->usager, $this->motPasse, $options );
 		} catch ( Exception $e ) {
