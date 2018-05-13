@@ -70,7 +70,12 @@
 */
 #map {
         height: 700px;
+        width: 80%;
       }
+#products {
+        width: 100px;
+      }
+
 /* The location pointed to by the popup tip. */
   .popup-tip-anchor {
 	height: 0;

@@ -67,6 +67,9 @@
 	<!-- Header area -->
 	<div class="section">
 		<div id="map"></div>
+        <div id="products">
+            <div>Hello</div>    
+        </div>
 		  <div class="well-searchbox">
                 <form id="formLocation" method="POST" class="form-inline">
                     <div class="form-group">
@@ -89,72 +92,13 @@
                             <input class="btn btn-primary" type="submit" value="Chercher"/>
                     </div>
                 </form>
-         
-	<script>
-      function initMap() {
-		 var uluru = {lat:  45.486542, lng: -73.472003};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 3,
-		  center:uluru
-          //center: {lat: 45, lng: -75}
-        });
-
-        // Create an array of alphabetical characters used to label the markers.
-        var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-        // Add some markers to the map.
-        // Note: The code uses the JavaScript Array.prototype.map() method to
-        // create an array of markers based on a given "locations" array.
-        // The map() method here has nothing to do with the Google Maps API.
-        var markers = locations.map(function(location, i) {
-          return new google.maps.Marker({
-            position: location,
-            label: labels[i % labels.length]
-          });
-        });
-
-        // Add a marker clusterer to manage the markers.
-        var markerCluster = new MarkerClusterer(map, markers,
-            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-			
-		var contentString = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<img src='+"'img/user.jpg' width=100% style='overflow:hidden'></img>"+
-            '</div>'+
-            '</div>';
-
-        var infowindow = new google.maps.InfoWindow({
-          content: contentString,
-          maxWidth: 200
-        });
-
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map,
-          title: 'Uluru (Ayers Rock)'
-        });
-        marker.addListener('click', function() {
-          infowindow.open(map, marker);
-        });
-      }
-      var locations = [
-        {lat: 45.460669, lng: -73.463977},
-        {lat: 45.472647, lng: -73.471444},
-        {lat: 45.551326, lng: -73.640804},
-        {lat: 45.534966, lng: -73.653457},
-        {lat: 45.546477, lng: -73.672285},
-        {lat: 45.486542, lng: -73.472003},
-        {lat: 45.525054, lng: -73.646095},
-        {lat: 45.515964, lng: -73.645947},
-      ]
-    </script>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoImA-iDx34KQ1O18cY7Wr7GHyKUx8-UM&callback=initMap">
     </script>		
 	</div>
+    </div>
 	<!-- spacer section -->    
 	<section class="spacer darkblue">
 		<div class="container">
