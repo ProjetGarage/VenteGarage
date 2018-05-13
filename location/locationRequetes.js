@@ -43,9 +43,12 @@ function charger()
     }); 
 }
 function chargerVilles()
-{
+{   var temploc="";
+    temploc=document.getElementById('idLocalite').value;
+    //console.log(temploc);
     $.ajax({
-        data: {"action" : "chargerVille"},
+        data: {"action" : "chargerVille",
+               "templocation":temploc},
         type: "POST",
         dataType: "json",
         url: "location/locationControleur.php",

@@ -68,10 +68,10 @@
 	<div class="section">
 		<div id="map"></div>
 		  <div class="well-searchbox">
-                <form class="form-inline">
+                <form id="formLocation" method="POST" class="form-inline">
                     <div class="form-group">
-                    	 <label >Province</label>
-                            <select id="idLocalite" class="form-control" placeholder="Localite">
+                    	 <label >Localite</label>
+                            <select id="idLocalite" onchange="chargerVilles();" class="form-control" placeholder="Localite">
                                 <option value="">All</option>
                             </select>
                         <label idclass="control-label">Ville</label>
@@ -86,7 +86,7 @@
                             </select>
                         <label class="control-label">Produit</label>
                         <input type="text" id="produit_txt" class="form-control" placeholder="Chercher..." name="produit" aria-describedby="basic-addon1">
-                            <button class="btn btn-primary" type="submit"><i class="fa fa-search fa-fw"></i></button>
+                            <input class="btn btn-primary" type="submit" value="Chercher"/>
                     </div>
                 </form>
          

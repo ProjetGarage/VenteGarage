@@ -4,7 +4,7 @@ function listerP(results){
           var latLng = new google.maps.LatLng(results[i].latitude,results[i].longitude);
           createMarker(results[i]);
         }
-      function createMarker(place) {
+function createMarker(place) {
           infowindow = new google.maps.InfoWindow();
           //var iconvalue=place.icon;
           var iconvalue="";
@@ -88,6 +88,7 @@ function chargerV(results){
     /*results.forEach( function(valor, indice, array) {
         console.log("En el índice " + indice + " hay este valor: " + valor);
     });*/
+     console.log(results)
     var x = document.getElementById("idVille");    
     for (var i = 0; i < results.length; i++) {
         var option = document.createElement("option");

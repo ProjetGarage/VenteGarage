@@ -117,7 +117,7 @@
             //$product=$_POST['product'];
             try{
                 $unModele=new membreModele();
-                $requete="SELECT distinct sublocalite from emplacements";
+                $requete="SELECT distinct sublocalite from emplacements order by sublocalite";
                 $unModele=new membreModele($requete,array());
                 $stmt=$unModele->executer();
                 $result = $stmt->fetchAll();
@@ -131,23 +131,27 @@
                 unset($unModele);
             }
 	}
-    function chargerVi(){
+    function writelog($txt)
+    {
+        $myfile = fopen("logfile.txt", "w") or die("Unable to open file!");
+        fwrite($myfile, $txt);
+        fclose($myfile);
+    }
+    function chargerVi($villevalue){
             global $action;
             global $rep;
             $localite="Windfall";
-            //$region=$_POST['region'];
-            //$localite=$_POST['localite'];
-            //$ville=$_POST['ville'];
-            //$categorie=$_POST['categorie'];
-            //$product=$_POST['product'];
             try{
                 $unModele=new membreModele();
                 $requete="SELECT distinct ville from emplacements where sublocalite=?";
-                $unModele=new membreModele($requete,array($localite));
+                //$requete="SELECT distinct ville from emplacements";
+                writelog($villevalue);
+                $unModele=new membreModele($requete,array($villevalue));
                 $stmt=$unModele->executer();
                 $result = $stmt->fetchAll();
-                //print_r($result);
-                //echo $result[1]["sublocalite"];
+                //$test=print_r($result);
+                //echo $result[1]["ville"];
+                
                 echo json_encode($result);
                 
                 //retourMessage("Client bien enregistre!");
@@ -160,6 +164,7 @@
 	//******************************************************
 	//Contrôleur
 	$action=$_POST['action'];
+    
     switch($action){
 		case "montrerPoints" :
 			montrerP();
@@ -177,11 +182,12 @@
             chargerL();
         break;
         case "chargerVille":
-            chargerVi();
+            $templocation=$_POST['templocation'];
+            chargerVi($templocation);
         break;
           
 	}
 /*montrerP();
 montrerProd();*/
-//chargerL();
+//chargerVi();
 ?>
