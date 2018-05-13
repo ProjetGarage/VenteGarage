@@ -113,7 +113,7 @@ function listerProd(){
     
 }
 
-function lister(){
+/*function lister(){
     $.ajax({
         data: {"action" : "montrerPoints"},
         type: "POST",
@@ -133,7 +133,35 @@ function lister(){
              console.log( "La solicitud a fallado: " +  errorThrown);
          }
     });
+}*/
+function lister(){
+    var formL = new FormData(document.getElementById('formLocation'));
+	formL.append('action','montrerPoints');
+    $.ajax({
+        data: formL,
+        type: "POST",
+        dataType: "json",
+        url: "location/locationControleur.php",
+        async : false,
+		cache : false,
+		contentType : false,
+		processData : false,
+        success: function (reponse){
+                listerP(reponse);
+            },
+    })
+     .done(function( data, textStatus, jqXHR ) {
+         if ( console && console.log ) {
+             console.log( "Success!" );
+         }
+     })
+     .fail(function( jqXHR, textStatus, errorThrown ) {
+         if ( console && console.log ) {
+             console.log( "La solicitud a fallado: " +  errorThrown);
+         }
+    });
 }
+
 function listerEvMap(){
     $.ajax({
         data: {"action" : "montrerPointsE"},

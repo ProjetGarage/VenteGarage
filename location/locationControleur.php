@@ -19,15 +19,15 @@
 		global $rep;
         $region='QC';
 		//$region=$_POST['region'];
-		//$localite=$_POST['localite'];
+		$localite=$_POST['idLocalite'];
 		//$ville=$_POST['ville'];
 		//$categorie=$_POST['categorie'];
         //$product=$_POST['product'];
 		try{
 			$unModele=new membreModele();
-			$requete="CALL `proc_vendors_prod`('qc')";
+			$requete="CALL `proc_vendors_prod`(?)";
             //$requete="SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.status) as pstatus,e.dateFin FROM adresses a,produits p,membres m,evenements e WHERE a.idMembre=p.idMembre and m.idMembre=a.idMembre and p.idEvenement=e.idEvenement and a.region=region and (e.dateFin<CURDATE() or p.idEvenement=0) and p.status=1 group by p.idEvenement,p.idMembre";
-			$unModele=new membreModele($requete);//,array($nom,$adresse,$age,$sexe));
+			$unModele=new membreModele($requete,array($region));
 			$stmt=$unModele->executer();
             $result = $stmt->fetchAll(PDO::FETCH_OBJ);
             echo json_encode($result);
@@ -140,13 +140,21 @@
     function chargerVi($villevalue){
             global $action;
             global $rep;
-            $localite="Windfall";
+            //$localite="Windfall";
             try{
                 $unModele=new membreModele();
-                $requete="SELECT distinct ville from emplacements where sublocalite=?";
-                //$requete="SELECT distinct ville from emplacements";
+                if (strlen($villevalue)>0)
+                {
+                    $requete="SELECT distinct ville from emplacements where sublocalite=? order by ville";
+                    $unModele=new membreModele($requete,array($villevalue));
+                
+                }
+                else
+                {
+                    $requete="SELECT distinct ville from emplacements order by ville";
+                    $unModele=new membreModele($requete,array());
+                }
                 writelog($villevalue);
-                $unModele=new membreModele($requete,array($villevalue));
                 $stmt=$unModele->executer();
                 $result = $stmt->fetchAll();
                 //$test=print_r($result);

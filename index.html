@@ -22,6 +22,11 @@
     <script src="location/global.js"></script>
     <script language="javascript" src="location/locationRequetes.js"></script>    
     <script language="javascript" src="location/locationControleurVue.js"></script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoImA-iDx34KQ1O18cY7Wr7GHyKUx8-UM&callback=initMap">
+    </script>	
     <!---------------------------  ------------------------------>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-- Ca me bloc a l'affisage de cart user!!!!>
@@ -66,37 +71,42 @@
 	</div>
 	<!-- Header area -->
 	<div class="section">
-		<div id="map"></div>
-        <div id="products">
-            <div>Hello</div>    
+        <div>
+            <div class="row row_style">
+                <div id="map" class="col-sm-10"></div>
+                <div class="col-sm-2">
+                    <br><br>
+                    <div id="products" class="col-sm-2">Hello</div>    
+                </div>
+            </div>
         </div>
 		  <div class="well-searchbox">
                 <form id="formLocation" method="POST" class="form-inline">
                     <div class="form-group">
                     	 <label >Localite</label>
-                            <select id="idLocalite" onchange="chargerVilles();" class="form-control" placeholder="Localite">
+                            <select id="idLocalite" name="idLocalite" onchange="chargerVilles();" class="form-control select-header" placeholder="Localite">
                                 <option value="">All</option>
                             </select>
                         <label idclass="control-label">Ville</label>
-                            <select id="idVille" class="form-control" placeholder="City">
+                            <select id="idVille" name="idVille" class="form-control select-header" placeholder="City">
                                 <option value="">All</option>
                             </select>
                         <label class="control-label">Category</label>
-                            <select class="form-control" placeholder="Categorie">
+                            <select class="form-control select-header" placeholder="Categorie">
                                 <option value="">All</option>
                                 <option value="">Category 1</option>
                                 <option value="">Category 2</option>
                             </select>
                         <label class="control-label">Produit</label>
-                        <input type="text" id="produit_txt" class="form-control" placeholder="Chercher..." name="produit" aria-describedby="basic-addon1">
-                            <input class="btn btn-primary" type="submit" value="Chercher"/>
+                        <input type="text" id="produit_txt" class="form-control select-header" placeholder="Chercher..." name="produit" aria-describedby="basic-addon1">
+                        <button type="submit" class="btn btn-primary icon-search icon-large"></button>
+                        <input type="button" value="Lister(R)" onClick="lister();">
+                         <input type="button" value="Events(R)" onClick="listerEvent();">
+                        <input type="button" value="ListerE(R)" onClick="listerEvMap();">
+                        <input type="button" value="Charger(R)" onClick="charger();">
+
                     </div>
-                </form>
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoImA-iDx34KQ1O18cY7Wr7GHyKUx8-UM&callback=initMap">
-    </script>		
+                </form>	
 	</div>
     </div>
 	<!-- spacer section -->    
