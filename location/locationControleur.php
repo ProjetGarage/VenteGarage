@@ -24,10 +24,10 @@
 		//$categorie=$_POST['categorie'];
         //$product=$_POST['product'];
 		try{
-			$unModele=new locationModele();
+			$unModele=new membreModele();
 			$requete="CALL `proc_vendors_prod`('qc')";
             //$requete="SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.status) as pstatus,e.dateFin FROM adresses a,produits p,membres m,evenements e WHERE a.idMembre=p.idMembre and m.idMembre=a.idMembre and p.idEvenement=e.idEvenement and a.region=region and (e.dateFin<CURDATE() or p.idEvenement=0) and p.status=1 group by p.idEvenement,p.idMembre";
-			$unModele=new locationModele($requete);//,array($nom,$adresse,$age,$sexe));
+			$unModele=new membreModele($requete);//,array($nom,$adresse,$age,$sexe));
 			$stmt=$unModele->executer();
             $result = $stmt->fetchAll(PDO::FETCH_OBJ);
             echo json_encode($result);
@@ -47,10 +47,10 @@
 		//$categorie=$_POST['categorie'];
         //$product=$_POST['product'];
 		try{
-			$unModele=new locationModele();
+			$unModele=new membreModele();
 			$requete="CALL `proc_vendors_event`('qc')";
             //$requete="SELECT e.idEvenement,e.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,e.dateFin FROM adresses a,membres m,evenements e WHERE m.idMembre=e.idMembre and e.idAdresse=a.idAdresse and a.region=region and e.dateFin>=curdate()";
-			$unModele=new locationModele($requete);//,array($nom,$adresse,$age,$sexe));
+			$unModele=new membreModele($requete);//,array($nom,$adresse,$age,$sexe));
 			$stmt=$unModele->executer();
             $result = $stmt->fetchAll(PDO::FETCH_OBJ);
             echo json_encode($result);
@@ -70,9 +70,9 @@
             //$categorie=$_POST['categorie'];
             //$product=$_POST['product'];
             try{
-                $unModele=new locationModele();
+                $unModele=new membreModele();
                 $requete="SELECT p.idProduit,p.nomProduit,p.description FROM produits p WHERE p.status<>0 and p.idMembre=?";
-                $unModele=new locationModele($requete,array($idMembre));
+                $unModele=new membreModele($requete,array($idMembre));
                 $stmt=$unModele->executer();
                 $result = $stmt->fetchAll(PDO::FETCH_OBJ);
                 //print_r($result);
@@ -93,9 +93,9 @@
             //$categorie=$_POST['categorie'];
             //$product=$_POST['product'];
             try{
-                $unModele=new locationModele();
+                $unModele=new membreModele();
                 $requete="SELECT e.idEvenement,e.titreEvenement,e.description FROM evenements e WHERE e.dateFin>=curdate() and e.idMembre=?";
-                $unModele=new locationModele($requete,array($idMembre));
+                $unModele=new membreModele($requete,array($idMembre));
                 $stmt=$unModele->executer();
                 $result = $stmt->fetchAll(PDO::FETCH_OBJ);
                 //print_r($result);
@@ -116,9 +116,9 @@
             //$categorie=$_POST['categorie'];
             //$product=$_POST['product'];
             try{
-                $unModele=new locationModele();
+                $unModele=new membreModele();
                 $requete="SELECT distinct sublocalite from emplacements";
-                $unModele=new locationModele($requete,array());
+                $unModele=new membreModele($requete,array());
                 $stmt=$unModele->executer();
                 $result = $stmt->fetchAll();
                 //print_r($result);
@@ -141,9 +141,9 @@
             //$categorie=$_POST['categorie'];
             //$product=$_POST['product'];
             try{
-                $unModele=new locationModele();
+                $unModele=new membreModele();
                 $requete="SELECT distinct ville from emplacements where sublocalite=?";
-                $unModele=new locationModele($requete,array($localite));
+                $unModele=new membreModele($requete,array($localite));
                 $stmt=$unModele->executer();
                 $result = $stmt->fetchAll();
                 //print_r($result);
