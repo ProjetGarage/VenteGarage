@@ -163,18 +163,24 @@ function lister(){
 }
 
 function listerEvMap(){
+    var formL = new FormData(document.getElementById('formLocation'));
+	formL.append('action','montrerPointsE');
     $.ajax({
-        data: {"action" : "montrerPointsE"},
+        data: formL,
         type: "POST",
         dataType: "json",
         url: "location/locationControleur.php",
+        async : false,
+		cache : false,
+		contentType : false,
+		processData : false,
         success: function (reponse){
                 listerEE(reponse);
             },
     })
      .done(function( data, textStatus, jqXHR ) {
          if ( console && console.log ) {
-             console.log( "Success!" );
+            // console.log( "Success!" );
          }
      })
      .fail(function( jqXHR, textStatus, errorThrown ) {

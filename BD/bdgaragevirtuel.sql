@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  Dim 13 mai 2018 à 14:48
+-- Généré le :  lun. 14 mai 2018 à 03:49
 -- Version du serveur :  5.7.17
 -- Version de PHP :  5.6.30
 
@@ -41,11 +41,47 @@ SELECT e.idEvenement,e.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatte
    WHERE m.idMembre=e.idMembre and e.idAdresse=a.idAdresse and
    a.region=region and e.dateFin>=curdate()$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_vendors_event_region_subl` (IN `region` VARCHAR(50), IN `sublocalite` VARCHAR(50))  NO SQL
+SELECT e.idEvenement,e.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,e.dateFin
+  FROM adresses a,membres m,evenements e
+   WHERE m.idMembre=e.idMembre and e.idAdresse=a.idAdresse and a.sublocalite=sublocalite and a.region=region and e.dateFin>=curdate()$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_vendors_event_region_subl_ville` (IN `region` VARCHAR(50), IN `sublocalite` VARCHAR(50), IN `ville` VARCHAR(50))  NO SQL
+SELECT e.idEvenement,e.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,e.dateFin
+  FROM adresses a,membres m,evenements e
+   WHERE m.idMembre=e.idMembre and e.idAdresse=a.idAdresse and a.sublocalite=sublocalite and a.ville=ville and a.region=region and e.dateFin>=curdate()$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_vendors_event_region_ville` (IN `region` VARCHAR(50), IN `ville` VARCHAR(50))  NO SQL
+SELECT e.idEvenement,e.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,e.dateFin
+  FROM adresses a,membres m,evenements e
+   WHERE m.idMembre=e.idMembre and e.idAdresse=a.idAdresse and a.ville=ville and a.region=region and e.dateFin>=curdate()$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_vendors_prod` (IN `region` VARCHAR(50))  NO SQL
 SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.status) as pstatus,e.dateFin
   FROM adresses a,produits p,membres m,evenements e
    WHERE a.idMembre=p.idMembre and m.idMembre=a.idMembre and
   p.idEvenement=e.idEvenement and a.region=region and (e.dateFin<CURDATE() or p.idEvenement=0) and p.status=1
+  group by p.idEvenement,p.idMembre$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_vendors_prod_region_subl` (IN `region` VARCHAR(50), IN `sublocalite` VARCHAR(50))  NO SQL
+SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.status) as pstatus,e.dateFin
+  FROM adresses a,produits p,membres m,evenements e
+   WHERE a.idMembre=p.idMembre and m.idMembre=a.idMembre and
+  p.idEvenement=e.idEvenement and a.region=region  and a.sublocalite=sublocalite and (e.dateFin<CURDATE() or p.idEvenement=0) and p.status=1
+  group by p.idEvenement,p.idMembre$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_vendors_prod_region_subl_ville` (IN `region` VARCHAR(50), IN `sublocalite` VARCHAR(50), IN `ville` VARCHAR(50))  NO SQL
+SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.status) as pstatus,e.dateFin
+  FROM adresses a,produits p,membres m,evenements e
+   WHERE a.idMembre=p.idMembre and m.idMembre=a.idMembre and
+  p.idEvenement=e.idEvenement and a.region=region  and a.sublocalite=sublocalite and a.ville=ville and (e.dateFin<CURDATE() or p.idEvenement=0) and p.status=1
+  group by p.idEvenement,p.idMembre$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_vendors_prod_region_ville` (IN `region` VARCHAR(50), IN `ville` VARCHAR(50))  NO SQL
+SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.status) as pstatus,e.dateFin
+  FROM adresses a,produits p,membres m,evenements e
+   WHERE a.idMembre=p.idMembre and m.idMembre=a.idMembre and
+  p.idEvenement=e.idEvenement and a.region=region and a.ville=ville and (e.dateFin<CURDATE() or p.idEvenement=0) and p.status=1
   group by p.idEvenement,p.idMembre$$
 
 DELIMITER ;
@@ -114,7 +150,7 @@ INSERT INTO `adresses` (`idAdresse`, `idMembre`, `numeroCivique`, `nomRue`, `vil
 (18, 29, 12, 'Natalia', 'Mont-Royal', 'H3R3L2', 'QC', '45.518729500', '-73.654724700', '', ''),
 (19, 30, 12, 'Glengarry', 'Montreal', 'H3R3L2', 'QC', '45.518729500', '-73.654724700', '', ''),
 (20, 31, 25, 'Acadie', 'Montreal', 'H2K2K1', 'Qc', '45.529729700', '-73.545975300', '', ''),
-(22, 32, 25, 'Hubert', 'Trois Rivier', 'H3R3L2', 'Qc', '45.518729500', '-73.654724700', '', ''),
+(22, 32, 25, 'Hubert', 'Trois Rivier', 'H3R3L2', 'Qc', '45.518729500', '-73.654724700', '', 'Longueuil'),
 (77, 124, 2525, 'boul rome', 'brossard', 'J4Y1P8', 'qc', '45.453777800', '-73.462928500', NULL, ''),
 (78, 125, 2525, 'boul rome', 'brossard', 'J4Y1P8', 'qc', '45.453777800', '-73.462928500', 'Brossard, QC J4Y 1P8, Canada', '');
 

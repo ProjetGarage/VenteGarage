@@ -77,6 +77,7 @@ function chargerSL(results){
         console.log("En el índice " + indice + " hay este valor: " + valor);
     });*/
     var x = document.getElementById("idLocalite");    
+   
     for (var i = 0; i < results.length; i++) {
         var option = document.createElement("option");
             option.text = results[i]["sublocalite"];
@@ -89,11 +90,13 @@ function chargerV(results){
         console.log("En el índice " + indice + " hay este valor: " + valor);
     });*/
      //console.log(results)
-    $('idVille').empty();
     var x = document.getElementById("idVille");    
+    while (x.options.length>1) {
+        x.remove(1);
+    }
     for (var i = 0; i < results.length; i++) {
         var option = document.createElement("option");
-            option.text = results[i]["ville"];
-            x.add(option);
+        option.text = results[i]["ville"];
+        x.add(option);
     }
 }

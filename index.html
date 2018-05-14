@@ -88,7 +88,7 @@
                                 <option value="">All</option>
                             </select>
                         <label idclass="control-label">Ville</label>
-                            <select id="idVille" name="idVille" onclick="chargerVilles();" class="form-control select-header" placeholder="City">
+                            <select id="idVille" name="idVille" class="form-control select-header" placeholder="City">
                                 <option value="">All</option>
                             </select>
                         <label class="control-label">Category</label>
@@ -99,11 +99,13 @@
                             </select>
                         <label class="control-label">Produit</label>
                         <input type="text" id="produit_txt" class="form-control select-header" placeholder="Chercher..." name="produit" aria-describedby="basic-addon1">
-                        <button type="submit" class="btn btn-primary icon-search icon-large"></button>
-                        <input type="button" value="Montrer Prod" onClick="lister();">
-                         <input type="button" value="Events(R)" onClick="listerEvent();">
-                        <input type="button" value="ListerE(R)" onClick="listerEvMap();">
-                        <input type="button" value="Charger(R)" onClick="charger();">
+                        <div class="form-group">
+                            <input type="button" class="btn btn-theme" value="Montrer Produits" onClick="lister();" >
+                            <input type="button" value="Montrer Events" class="btn btn-theme" onClick="listerEvMap();" >
+                            <input type="submit" value="Reset" class="btn btn-theme">
+                        </div>
+                        <input type="button" value="Lister Prod" onClick="charger();">
+                         <input type="button" value="Lister Events" onClick="listerEvent();">
 
                     </div>
                 </form>	

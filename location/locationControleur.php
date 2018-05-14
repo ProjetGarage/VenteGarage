@@ -71,16 +71,50 @@
 		global $action;
 		global $rep;
         $region='QC';
-		//$region=$_POST['region'];
-		//$localite=$_POST['localite'];
-		//$ville=$_POST['ville'];
+        if (isset($_POST['idLocalite']))
+		  $localite=$_POST['idLocalite'];
+        else
+            $localite="";
+        
+        if (isset($_POST['idVille']))
+		  $ville=$_POST['idVille'];
+        else
+          $ville="";
+        if ($ville="All")
+            $ville="";
 		//$categorie=$_POST['categorie'];
         //$product=$_POST['product'];
 		try{
 			$unModele=new membreModele();
-			$requete="CALL `proc_vendors_event`('qc')";
-            //$requete="SELECT e.idEvenement,e.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,e.dateFin FROM adresses a,membres m,evenements e WHERE m.idMembre=e.idMembre and e.idAdresse=a.idAdresse and a.region=region and e.dateFin>=curdate()";
-			$unModele=new membreModele($requete);//,array($nom,$adresse,$age,$sexe));
+			//$requete="CALL `proc_vendors_event`('qc')";
+			//$unModele=new membreModele($requete);//,array($nom,$adresse,$age,$sexe));
+            if (strlen($localite)>0)
+            {
+                if (strlen($ville)>0)
+                {
+                    $requete="CALL `proc_vendors_event_region_subl_ville`(?,?,?);";
+                    $unModele=new membreModele($requete,array($region,$localite,$ville));
+                }
+                else
+                {
+                    $requete="CALL `proc_vendors_event_region_subl`(?, ?);";
+                    $unModele=new membreModele($requete,array($region,$localite));
+                }
+            }
+            else
+            {
+                if (strlen($ville)>0)
+                {
+                    $requete="CALL `proc_vendors_event_region_ville`(?, ?);";
+                    $unModele=new membreModele($requete,array($region,$ville));
+                }
+                else
+                {
+                    $requete="CALL `proc_vendors_event`(?)";
+                    $unModele=new membreModele($requete,array($region));
+                }
+            }
+            
 			$stmt=$unModele->executer();
             $result = $stmt->fetchAll(PDO::FETCH_OBJ);
             echo json_encode($result);
