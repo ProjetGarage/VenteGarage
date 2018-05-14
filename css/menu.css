@@ -75,6 +75,7 @@
 .row_style
 {
     margin-left: 0%;
+    margin-bottom: 0px;
 }
 .container_menu
 {
@@ -363,7 +364,7 @@ Popup style
 	}
 }
 /*-- //login --*/
- hr.{ 
+ hr { 
             margin-top: -3px;
             margin-bottom: 0px;
         }

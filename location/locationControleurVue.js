@@ -64,11 +64,11 @@ function listerPr(results){
 }
 //montrer les events 
 function listerEv(results){
-    document.getElementById('products').innerHTML+="<div class='row'><hr></div>";
+    document.getElementById('products').innerHTML+="<div class='row row_style'><hr></div>";
     for (var i = 0; i < results.length; i++) {
-      document.getElementById('products').innerHTML+="<div class='row'>"+results[i].titreEvenement+"</div>";
-      document.getElementById('products').innerHTML+="<div class='row'>"+results[i].description+"</div>";
-      document.getElementById('products').innerHTML+="<div class='row'><hr></div>";     
+      document.getElementById('products').innerHTML+="<div class='row row_style'><h6>"+results[i].titreEvenement+"</h6></div>";
+      document.getElementById('products').innerHTML+="<div class='row row_style'><p>"+results[i].description+"</p></div>";
+      document.getElementById('products').innerHTML+="<div class='row row_style'><hr></div>";     
     }
 }
 function chargerSL(results){
@@ -88,7 +88,8 @@ function chargerV(results){
     /*results.forEach( function(valor, indice, array) {
         console.log("En el índice " + indice + " hay este valor: " + valor);
     });*/
-     console.log(results)
+     //console.log(results)
+    $('idVille').empty();
     var x = document.getElementById("idVille");    
     for (var i = 0; i < results.length; i++) {
         var option = document.createElement("option");

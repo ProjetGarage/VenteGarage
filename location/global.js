@@ -2,6 +2,7 @@ function main()
 {
     initMap();
     charger();
+ //   chargerVilles();
 }
   function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {

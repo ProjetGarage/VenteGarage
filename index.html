@@ -76,7 +76,7 @@
                 <div id="map" class="col-sm-10"></div>
                 <div class="col-sm-2">
                     <br><br>
-                    <div id="products" class="col-sm-2">Hello</div>    
+                    <div id="products" class="col-sm-8"></div>    
                 </div>
             </div>
         </div>
@@ -88,7 +88,7 @@
                                 <option value="">All</option>
                             </select>
                         <label idclass="control-label">Ville</label>
-                            <select id="idVille" name="idVille" class="form-control select-header" placeholder="City">
+                            <select id="idVille" name="idVille" onclick="chargerVilles();" class="form-control select-header" placeholder="City">
                                 <option value="">All</option>
                             </select>
                         <label class="control-label">Category</label>
@@ -100,7 +100,7 @@
                         <label class="control-label">Produit</label>
                         <input type="text" id="produit_txt" class="form-control select-header" placeholder="Chercher..." name="produit" aria-describedby="basic-addon1">
                         <button type="submit" class="btn btn-primary icon-search icon-large"></button>
-                        <input type="button" value="Lister(R)" onClick="lister();">
+                        <input type="button" value="Montrer Prod" onClick="lister();">
                          <input type="button" value="Events(R)" onClick="listerEvent();">
                         <input type="button" value="ListerE(R)" onClick="listerEvMap();">
                         <input type="button" value="Charger(R)" onClick="charger();">

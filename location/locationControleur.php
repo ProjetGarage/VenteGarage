@@ -18,16 +18,46 @@
 		global $action;
 		global $rep;
         $region='QC';
-		//$region=$_POST['region'];
-		$localite=$_POST['idLocalite'];
-		//$ville=$_POST['ville'];
+        if (isset($_POST['idLocalite']))
+		  $localite=$_POST['idLocalite'];
+        else
+            $localite="";
+        
+        if (isset($_POST['idVille']))
+		  $ville=$_POST['idVille'];
+        else
+          $ville="";
+	
 		//$categorie=$_POST['categorie'];
         //$product=$_POST['product'];
 		try{
 			$unModele=new membreModele();
-			$requete="CALL `proc_vendors_prod`(?)";
-            //$requete="SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.status) as pstatus,e.dateFin FROM adresses a,produits p,membres m,evenements e WHERE a.idMembre=p.idMembre and m.idMembre=a.idMembre and p.idEvenement=e.idEvenement and a.region=region and (e.dateFin<CURDATE() or p.idEvenement=0) and p.status=1 group by p.idEvenement,p.idMembre";
-			$unModele=new membreModele($requete,array($region));
+            if (strlen($localite)>0)
+            {
+                if (strlen($ville)>0)
+                {
+                    $requete="CALL `proc_vendors_prod_region_subl_ville`(?,?,?);";
+                    $unModele=new membreModele($requete,array($region,$localite,$ville));
+                }
+                else
+                {
+                    $requete="CALL `proc_vendors_prod_region_subl`(?, ?);";
+                    $unModele=new membreModele($requete,array($region,$localite));
+                }
+            }
+            else
+            {
+                if (strlen($ville)>0)
+                {
+                    $requete="CALL `proc_vendors_prod_region_ville`(?, ?);";
+                    $unModele=new membreModele($requete,array($region,$ville));
+                }
+                else
+                {
+                    $requete="CALL `proc_vendors_prod`(?)";
+                    $unModele=new membreModele($requete,array($region));
+                }
+            }
 			$stmt=$unModele->executer();
             $result = $stmt->fetchAll(PDO::FETCH_OBJ);
             echo json_encode($result);
@@ -147,7 +177,7 @@
                 {
                     $requete="SELECT distinct ville from emplacements where sublocalite=? order by ville";
                     $unModele=new membreModele($requete,array($villevalue));
-                
+            
                 }
                 else
                 {
