@@ -95,7 +95,7 @@
 			if($ligne=$stmt->fetch(PDO::FETCH_OBJ))
 			    $idm=$ligne->idMembre;
 						
-			$requete2="select idProduit,pochette,nomProduit, description, quantite, idEvenement,idCategorie,quantite,prix,statut from produits where produits.idMembre=?";
+			$requete2="select idProduit,pochette,nomProduit, description, quantite, idMembre,idCategorie,quantite,prix,statut from produits where produits.idMembre=?";
 			$unModele=new membreModele($requete2,array($idm));
 			$stmt=$unModele->executer();
 			$tabRes['listePr']=array();
@@ -107,7 +107,6 @@
 			unset($unModele);
 		}
 	}
-	
 	
 	
 	function listerC()
@@ -229,7 +228,33 @@
 			unset($unModele);
 		}
 	}
-	
+
+function modifier(){
+		global $tabRes;	
+        $idProduit=$_POST['id_prod_mod'];
+		$nomProduit=$_POST['nomProduit_mod'];
+		$idCategorie=$_POST['categorieProd_mod'];
+	    //$courriel=$_POST['courriel4'];
+	    $quantite=$_POST['quantiteProd_mod'];
+	    $description=$_POST['descriptionProd_mod'];
+		$statut=$_POST['statutProd_mod'];
+		$pochette=$POST['photoProd_mod'];
+		$prix=$_POST['prixProd_mod'];
+        $idMembref=$_POST['idMembre_mod'];
+		try{
+		
+			$requete5="UPDATE Produits SET nomProduit=?,idCategorie=?, quantite=?, statut=?, description=?, prix=?, idMembre=? WHERE idProduit=?";
+			$unModele=new membreModele($requete5,array($nomProduit,$idCategorie,$quantite,$statut,$description,$prix,$idMembref,$idProduite));
+			$stmt=$unModele->executer();
+			$tabRes['action']="modifier";
+			$tabRes['msg']="Produit $idProduit bien modifie";
+			
+		}catch(Exception $e){
+		}finally{
+			unset($unModele);
+		}
+	}
+/*	
 	function modifier(){
 		global $tabRes;	
 		$nomProduit=$_POST['nomProduit4'];
@@ -282,7 +307,7 @@
 			unset($unModele);
 		}
 	}
-		
+*/		
 	//******************************************************
 	//Contrôleur
 

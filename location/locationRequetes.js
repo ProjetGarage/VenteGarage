@@ -169,20 +169,4 @@ function listerEvMap(){
          }
     });
 }
-   /* var formLocation = new FormData(document.getElementById('formLister'));
-	formLocation.append('action','lister');
-        $.ajax({
-            type : 'POST',
-            url : 'js/puntos.js',
-            data : {'action':'lister'},
-            dataType : 'json', 
-            success : function (reponse){
-                console.log('Success');
-                listerP(reponse);
-            },
-            fail : function (){
-               console.log('Error');
-            }
-        });
-    } */
 

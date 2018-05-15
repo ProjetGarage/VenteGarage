@@ -138,8 +138,9 @@ function afficherTous(fiches){
     rep+="              </div> ";
     rep+="              <div class='modal-body'> ";
     rep+="                <div class='col-md-12 single-right-grid-right'> ";
-    rep+="                <form class='form-horizontal' id='formModifyPr' enctype='multipart/form-data' action='' method='POST' onSubmit='return valider();'>  ";
+    rep+="                <form class='form-horizontal' id='formModifyPr' enctype='multipart/form-data' action='' method='POST'>  ";
     rep+="                      <input class='form-control' type='text' id='id_prod_mod' name='id_prod_mod' style='visibility:hidden' placeholder='Id Produit'  required> ";
+    rep+="<input class='form-control' type='text' id='idMembre_mod' name='idMembre_mod' style='visibility:hidden'  required> ";
     rep+="                      <br>Nom Produit: <input placeholder='Nom Produit' class='form-control' type='text' id='nomProduit_mod' name='nomProduit_mod' required> ";
     rep+="                     <br>Quantite:&nbsp;&nbsp;&nbsp;&nbsp; <input class='form-control' type='number' step='0.01' id='quantiteProd_mod' name='quantiteProd_mod' placeholder='Quantite' required>";
     rep+="                      <br>Prix:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input placeholder='Prix' class='form-control' type='number' step='0.01' id='prixProd_mod' name='prixProd_mod' required> ";
@@ -160,9 +161,6 @@ function afficherTous(fiches){
     rep+="                            <option value='14'>velos</option> ";
     rep+="                            <option value='15'>vetements</option> ";
     rep+="                          </select> ";
-    rep+="                    <br>Evenement: <select placeholder='Evenement' class='form-control col-sd-3' id='evenementPr_mod' name='evenementPr_mod'>";
-    rep+="                            <option value='0'>0</option> ";
-    rep+="                          </select> ";
     rep+="                    <br>Statut:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select placeholder='Statut' class='form-control col-sd-10' id='statutProd_mod' name='statutProd_mod'> ";
     rep+="                            <option value='1'>Activée</option> ";
     rep+="                            <option value='0'>Désactivée</option> ";
@@ -170,7 +168,7 @@ function afficherTous(fiches){
     rep+="                        <p id='srctxt' name='srctxt'>Photo: </p><input class='form-control' type='file' id='photoProd_mod' name='photoProd_mod' placeholder='Photo'> ";
     rep+="                        <br>Description: <input size='255' maxlength='255' type='textarea' class='form-control' placeholder='Description de produit' rows='4' cols='50' id='descriptionProd_mod'  name='descriptionProd_mod'> ";
     rep+="                            <div class='modal-footer'> ";
-    rep+="                                <input type='submit' class='btn btn-theme' value='Modifier'> ";
+    rep+="                                <input type='button' class='btn btn-theme' value='Modifier' onclick='modifierProd();'> ";
     rep+="                                <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button> ";
     rep+="                            </div> ";
     rep+="                    </form> ";
@@ -206,10 +204,10 @@ function afficherTous(fiches){
       rep+="    <thead> ";
       rep+="   <tr> ";
       rep+="  <th>No.</th> ";
+      rep+="  <th>No.Membre</th> ";
       rep+="  <th>Photo</th> ";
       rep+="  <th>Nom Produit</th>"; 
       rep+="  <th>Description</th> ";
-      rep+="  <th>Événement</th> ";
       rep+="  <th>Catégorie</th> ";
       rep+="  <th>Quantite</th> ";
       rep+="  <th>Prix</th>";
@@ -239,16 +237,16 @@ function listerProduits(list){
 	for(var i=0; i<taille; i++){
         rep+="<tr class='rem1'>";
 		rep+="<td id='idProd' class='invert'>"+list[i].idProduit;
+        rep+="<td id='idMembre' class='invert'>"+list[i].idMembre;
         rep+="</td><td id='photoProd' lass='invert'>"+list[i].pochette;
         rep+="</td><td id='nomProd' class='invert'>"+list[i].nomProduit;
-        rep+="</td><td class='invert'>"+list[i].description;
-        rep+="</td><td class='invert'>"+list[i].idEvenement;		 
+        rep+="</td><td class='invert'>"+list[i].description;	 
         rep+="</td><td class='invert'>"+list[i].idCategorie;		 
         rep+="</td><td class='invert'>"+list[i].quantite;
         rep+="</td><td class='invert'>"+list[i].prix;
         rep+="</td><td class='invert'>"+list[i].statut+"</td>";
         rep+="<td class='invert'>"; 
-        rep+="<button type='button' class='btn btn-theme' data-toggle='modal' data-target='#modifyModalPr' onclick=\"document.getElementById('id_prod_mod').value="+list[i].idProduit+";document.getElementById('nomProduit_mod').value='"+list[i].nomProduit+"';document.getElementById('quantiteProd_mod').value="+list[i].quantite+";document.getElementById('prixProd_mod').value="+list[i].prix+";document.getElementById('categorieProd_mod').value="+list[i].idCategorie+";document.getElementById('evenementPr_mod').value="+list[i].idEvenement+";document.getElementById('statutProd_mod').value="+list[i].statut+";document.getElementById('descriptionProd_mod').value='"+list[i].description+"';document.getElementById('srctxt').innerHTML='Photo: "+list[i].pochette+"';\">&nbsp;&nbsp;Modifier&nbsp;&nbsp;</button>";
+        rep+="<button type='button' class='btn btn-theme' data-toggle='modal' data-target='#modifyModalPr' onclick=\"document.getElementById('id_prod_mod').value="+list[i].idProduit+";document.getElementById('nomProduit_mod').value='"+list[i].nomProduit+"';document.getElementById('quantiteProd_mod').value="+list[i].quantite+";document.getElementById('prixProd_mod').value="+list[i].prix+";document.getElementById('categorieProd_mod').value="+list[i].idCategorie+";document.getElementById('idMembre_mod').value="+list[i].idMembre+";document.getElementById('statutProd_mod').value="+list[i].statut+";document.getElementById('descriptionProd_mod').value='"+list[i].description+"';document.getElementById('srctxt').innerHTML='Photo: "+list[i].pochette+"';\">&nbsp;&nbsp;Modifier&nbsp;&nbsp;</button>";
         rep+="<br><br><button type='button' class='btn btn-theme' data-toggle='modal' data-target='#delModalPr' onclick=''>Supprimer</button></td></tr>";
 	}
     rep+=printtablefooter();

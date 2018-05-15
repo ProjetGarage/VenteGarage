@@ -188,8 +188,8 @@ function obtenirFiche(){
 	});
 }
 
-function modifier(){
-	var leForm=document.getElementById('formFicheF');
+function modifierProd(){
+	var leForm=document.getElementById('formModifyPr');
 	var formProduit = new FormData(leForm);
 	formProduit.append('action','modifier');
 	$.ajax({
@@ -201,7 +201,7 @@ function modifier(){
 		dataType : 'text', 
 		success : function (reponse){alert(reponse);
 					//$('#divFormFiche').hide();
-					//produitsVue(reponse);
+					produitsVue(reponse);
 		},
 		fail : function (err){
 		}

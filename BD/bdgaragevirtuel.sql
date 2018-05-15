@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mar. 15 mai 2018 à 07:42
+-- Généré le :  mer. 16 mai 2018 à 00:01
 -- Version du serveur :  5.7.17
 -- Version de PHP :  5.6.30
 
@@ -29,7 +29,7 @@ DELIMITER $$
 -- Procédures
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_vendors` (IN `region` VARCHAR(20))  NO SQL
-SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.status) as pstatus,e.status as estatus
+SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.statut) as pstatus,e.status as estatus
   FROM adresses a,produits p,membres m,evenements e
    WHERE a.idMembre=p.idMembre and m.idMembre=a.idMembre and
   p.idEvenement=e.idEvenement and a.region=region
@@ -57,31 +57,31 @@ SELECT e.idEvenement,e.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatte
    WHERE m.idMembre=e.idMembre and e.idAdresse=a.idAdresse and a.ville=ville and a.region=region and e.dateFin>=curdate()$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_vendors_prod` (IN `region` VARCHAR(50))  NO SQL
-SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.status) as pstatus,e.dateFin
+SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.statut) as pstatus,e.dateFin
   FROM adresses a,produits p,membres m,evenements e
    WHERE a.idMembre=p.idMembre and m.idMembre=a.idMembre and
-  p.idEvenement=e.idEvenement and a.region=region and (e.dateFin<CURDATE() or p.idEvenement=0) and p.status=1
+  p.idEvenement=e.idEvenement and a.region=region and (e.dateFin<CURDATE() or p.idEvenement=0) and p.statut=1
   group by p.idEvenement,p.idMembre$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_vendors_prod_region_subl` (IN `region` VARCHAR(50), IN `sublocalite` VARCHAR(50))  NO SQL
-SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.status) as pstatus,e.dateFin
+SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.statut) as pstatus,e.dateFin
   FROM adresses a,produits p,membres m,evenements e
    WHERE a.idMembre=p.idMembre and m.idMembre=a.idMembre and
-  p.idEvenement=e.idEvenement and a.region=region  and a.sublocalite=sublocalite and (e.dateFin<CURDATE() or p.idEvenement=0) and p.status=1
+  p.idEvenement=e.idEvenement and a.region=region  and a.sublocalite=sublocalite and (e.dateFin<CURDATE() or p.idEvenement=0) and p.statut=1
   group by p.idEvenement,p.idMembre$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_vendors_prod_region_subl_ville` (IN `region` VARCHAR(50), IN `sublocalite` VARCHAR(50), IN `ville` VARCHAR(50))  NO SQL
-SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.status) as pstatus,e.dateFin
+SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.statut) as pstatus,e.dateFin
   FROM adresses a,produits p,membres m,evenements e
    WHERE a.idMembre=p.idMembre and m.idMembre=a.idMembre and
-  p.idEvenement=e.idEvenement and a.region=region  and a.sublocalite=sublocalite and a.ville=ville and (e.dateFin<CURDATE() or p.idEvenement=0) and p.status=1
+  p.idEvenement=e.idEvenement and a.region=region  and a.sublocalite=sublocalite and a.ville=ville and (e.dateFin<CURDATE() or p.idEvenement=0) and p.statut=1
   group by p.idEvenement,p.idMembre$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_vendors_prod_region_ville` (IN `region` VARCHAR(50), IN `ville` VARCHAR(50))  NO SQL
-SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.status) as pstatus,e.dateFin
+SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.statut) as pstatus,e.dateFin
   FROM adresses a,produits p,membres m,evenements e
    WHERE a.idMembre=p.idMembre and m.idMembre=a.idMembre and
-  p.idEvenement=e.idEvenement and a.region=region and a.ville=ville and (e.dateFin<CURDATE() or p.idEvenement=0) and p.status=1
+  p.idEvenement=e.idEvenement and a.region=region and a.ville=ville and (e.dateFin<CURDATE() or p.idEvenement=0) and p.statut=1
   group by p.idEvenement,p.idMembre$$
 
 DELIMITER ;
@@ -17255,17 +17255,18 @@ CREATE TABLE `produits` (
   `idMembre` int(8) NOT NULL,
   `statut` int(1) NOT NULL,
   `idEvenement` int(8) NOT NULL,
-  `prix` decimal(8,2) NOT NULL
+  `prix` decimal(8,2) NOT NULL,
+  `pochette` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Déchargement des données de la table `produits`
 --
 
-INSERT INTO `produits` (`idProduit`, `nomProduit`, `description`, `quantite`, `idCategorie`, `idMembre`, `statut`, `idEvenement`, `prix`) VALUES
-(1, 'bycicle', 'beautiful bycicle', 1, 14, 32, 1, 0, '0.00'),
-(16, 'none', 'none', 0, 0, 32, 0, 0, '0.00'),
-(17, 'bouteille allaitement playtex', 'Plusieurs biberons en etat neuf', 4, 5, 1, 1, 0, '12.99');
+INSERT INTO `produits` (`idProduit`, `nomProduit`, `description`, `quantite`, `idCategorie`, `idMembre`, `statut`, `idEvenement`, `prix`, `pochette`) VALUES
+(1, 'bycicle', 'beautiful bycicle', 1, 14, 32, 1, 0, '0.00', ''),
+(16, 'none', 'none', 0, 0, 32, 0, 0, '0.00', ''),
+(17, 'bouteille allaitement playtex', 'Plusieurs biberons en etat neuf', 4, 5, 1, 1, 0, '12.99', '');
 
 -- --------------------------------------------------------
 
