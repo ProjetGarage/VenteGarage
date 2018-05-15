@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 14 mai 2018 à 03:49
+-- Généré le :  mar. 15 mai 2018 à 07:42
 -- Version du serveur :  5.7.17
 -- Version de PHP :  5.6.30
 
@@ -152,7 +152,9 @@ INSERT INTO `adresses` (`idAdresse`, `idMembre`, `numeroCivique`, `nomRue`, `vil
 (20, 31, 25, 'Acadie', 'Montreal', 'H2K2K1', 'Qc', '45.529729700', '-73.545975300', '', ''),
 (22, 32, 25, 'Hubert', 'Trois Rivier', 'H3R3L2', 'Qc', '45.518729500', '-73.654724700', '', 'Longueuil'),
 (77, 124, 2525, 'boul rome', 'brossard', 'J4Y1P8', 'qc', '45.453777800', '-73.462928500', NULL, ''),
-(78, 125, 2525, 'boul rome', 'brossard', 'J4Y1P8', 'qc', '45.453777800', '-73.462928500', 'Brossard, QC J4Y 1P8, Canada', '');
+(78, 125, 2525, 'boul rome', 'brossard', 'J4Y1P8', 'qc', '45.453777800', '-73.462928500', 'Brossard, QC J4Y 1P8, Canada', ''),
+(79, 126, 2325, 'boul Rome', 'Brossard', 'J4Y1P8', 'QC', '45.453777800', '-73.462928500', 'Brossard, QC J4Y 1P8, Canada', ''),
+(80, 127, 2325, 'boul Rome', 'Brossard', 'J4Y1P8', 'QC', '45.453777800', '-73.462928500', 'Brossard, QC J4Y 1P8, Canada', '');
 
 -- --------------------------------------------------------
 
@@ -17201,7 +17203,9 @@ INSERT INTO `membres` (`idMembre`, `prenom`, `nom`, `telephone`, `dateNaissance`
 (31, 'Lipceanu', 'Mariana', '51478945623', '02/05/1988', 'F', 'e299e7535a72426c3bb6eaec06345f3d85312f85.jpg', 'mariana@yahoo.com', 'fdcca43175c6c3da4542836cb553cf4d2bd66b4a'),
 (32, 'Alexandra', 'Jambina', '5147894561', '02/05/1789', 'F', '4fb541d7f2b1ead372ab3221e17956888dd8a64e.jpg', 'alexandra@yahoo.com', 'fdcca43175c6c3da4542836cb553cf4d2bd66b4a'),
 (124, 'Ale', 'Jim', '2222222222', '20/01/2000', 'M', 'avatar.jpg', 'alejjimn@gmail.com', '1f98a0fa07eca41de3b4090407a7c39c952db5aa'),
-(125, 'Ale', 'Jim', '2222222222', '20/01/2000', 'M', 'avatar.jpg', 'alejjimn2@gmail.com', '7f6a6a8c3708cb39eecdcf3c1449ae6fc5692c5c');
+(125, 'Ale', 'Jim', '2222222222', '20/01/2000', 'M', 'avatar.jpg', 'alejjimn2@gmail.com', '7f6a6a8c3708cb39eecdcf3c1449ae6fc5692c5c'),
+(126, 'Alejandra', 'Jimenez', '4345556677', '30/01/2000', 'F', 'cab1953741004d6a20fc47288245c08d24e31175.JPG', 'alejjimn3@gmail.com', 'f91096663e5cf61f471da294d23c99a6a29075c7'),
+(127, 'AIDA', 'Jimenez', '6667778889', '20/04/2000', 'M', 'avatar.jpg', 'alejjimn44@gmail.com', 'f91096663e5cf61f471da294d23c99a6a29075c7');
 
 -- --------------------------------------------------------
 
@@ -17244,22 +17248,24 @@ CREATE TABLE `photoproduits` (
 
 CREATE TABLE `produits` (
   `idProduit` int(8) NOT NULL,
-  `nomProduit` varchar(50) CHARACTER SET latin1 NOT NULL,
-  `description` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `nomProduit` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `quantite` int(5) NOT NULL,
   `idCategorie` int(8) NOT NULL,
   `idMembre` int(8) NOT NULL,
-  `status` int(11) NOT NULL,
-  `idEvenement` int(11) NOT NULL
+  `statut` int(1) NOT NULL,
+  `idEvenement` int(8) NOT NULL,
+  `prix` decimal(8,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Déchargement des données de la table `produits`
 --
 
-INSERT INTO `produits` (`idProduit`, `nomProduit`, `description`, `quantite`, `idCategorie`, `idMembre`, `status`, `idEvenement`) VALUES
-(1, 'bycicle', 'beautiful bycicle', 1, 14, 32, 1, 0),
-(16, 'none', 'none', 0, 0, 32, 0, 0);
+INSERT INTO `produits` (`idProduit`, `nomProduit`, `description`, `quantite`, `idCategorie`, `idMembre`, `statut`, `idEvenement`, `prix`) VALUES
+(1, 'bycicle', 'beautiful bycicle', 1, 14, 32, 1, 0, '0.00'),
+(16, 'none', 'none', 0, 0, 32, 0, 0, '0.00'),
+(17, 'bouteille allaitement playtex', 'Plusieurs biberons en etat neuf', 4, 5, 1, 1, 0, '12.99');
 
 -- --------------------------------------------------------
 
@@ -17349,7 +17355,7 @@ ALTER TABLE `abonnements`
 -- AUTO_INCREMENT pour la table `adresses`
 --
 ALTER TABLE `adresses`
-  MODIFY `idAdresse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `idAdresse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 --
 -- AUTO_INCREMENT pour la table `categories`
 --
@@ -17369,7 +17375,7 @@ ALTER TABLE `evenements`
 -- AUTO_INCREMENT pour la table `membres`
 --
 ALTER TABLE `membres`
-  MODIFY `idMembre` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+  MODIFY `idMembre` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 --
 -- AUTO_INCREMENT pour la table `photoproduits`
 --
@@ -17379,7 +17385,7 @@ ALTER TABLE `photoproduits`
 -- AUTO_INCREMENT pour la table `produits`
 --
 ALTER TABLE `produits`
-  MODIFY `idProduit` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `idProduit` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- Contraintes pour les tables déchargées
 --
