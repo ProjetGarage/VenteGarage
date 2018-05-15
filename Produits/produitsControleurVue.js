@@ -238,7 +238,7 @@ function listerProduits(list){
         rep+="<tr class='rem1'>";
 		rep+="<td id='idProd' class='invert'>"+list[i].idProduit;
         rep+="<td id='idMembre' class='invert'>"+list[i].idMembre;
-        rep+="</td><td id='photoProd' lass='invert'>"+list[i].pochette;
+        rep+="</td><td id='photoProd' lass='invert'><img src='pochette/"+list[i].pochette+"' width='80'";
         rep+="</td><td id='nomProd' class='invert'>"+list[i].nomProduit;
         rep+="</td><td class='invert'>"+list[i].description;	 
         rep+="</td><td class='invert'>"+list[i].idCategorie;		 

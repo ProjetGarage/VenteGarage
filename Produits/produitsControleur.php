@@ -231,6 +231,7 @@
 
 function modifier(){
 		global $tabRes;	
+        $pochette="";
         $idProduit=$_POST['id_prod_mod'];
 		$nomProduit=$_POST['nomProduit_mod'];
 		$idCategorie=$_POST['categorieProd_mod'];
@@ -238,18 +239,37 @@ function modifier(){
 	    $quantite=$_POST['quantiteProd_mod'];
 	    $description=$_POST['descriptionProd_mod'];
 		$statut=$_POST['statutProd_mod'];
-		$pochette=$POST['photoProd_mod'];
+        $dossier="../pochette/";
+        $nomPochette=sha1($nomProduit.time());
+        //$pochette="avatar.jpg";
+        if($_FILES['photoProd_mod']['tmp_name']!==""){
+                $tmp = $_FILES['photoProd_mod']['tmp_name'];
+                $fichier= $_FILES['photoProd_mod']['name'];
+                $extension=strrchr($fichier,'.');
+                @move_uploaded_file($tmp,$dossier.$nomPochette.$extension);
+                // Enlever le fichier temporaire chargé
+                @unlink($tmp); //effacer le fichier temporaire
+                $pochette=$nomPochette.$extension;
+        }
 		$prix=$_POST['prixProd_mod'];
         $idMembref=$_POST['idMembre_mod'];
 		try{
-		
-			$requete5="UPDATE Produits SET nomProduit=?,idCategorie=?, quantite=?, statut=?, description=?, prix=?, idMembre=? WHERE idProduit=?";
-			$unModele=new membreModele($requete5,array($nomProduit,$idCategorie,$quantite,$statut,$description,$prix,$idMembref,$idProduite));
+		    if ($pochette!="")
+            {
+                $requete5="UPDATE Produits SET nomProduit=?,idCategorie=?, quantite=?, statut=?, description=?, prix=?, idMembre=?,pochette=? WHERE idProduit=?";
+                $unModele=new membreModele($requete5,array($nomProduit,$idCategorie,$quantite,$statut,$description,$prix,$idMembref,$pochette,$idProduit));
+            }
+            else
+            {
+			    $requete5="UPDATE Produits SET nomProduit=?,idCategorie=?, quantite=?, statut=?, description=?, prix=?, idMembre=? WHERE idProduit=?";
+                $unModele=new membreModele($requete5,array($nomProduit,$idCategorie,$quantite,$statut,$description,$prix,$idMembref,$idProduit));
+            }
 			$stmt=$unModele->executer();
 			$tabRes['action']="modifier";
 			$tabRes['msg']="Produit $idProduit bien modifie";
 			
 		}catch(Exception $e){
+            
 		}finally{
 			unset($unModele);
 		}
@@ -340,6 +360,7 @@ function modifier(){
 		
 		case "listeProduits" :
 			listerProduitsVendeur();
+            echo json_encode($tabRes);
 		break;
 		
 		case "listeE" :
@@ -351,10 +372,11 @@ function modifier(){
 		break;
 		case "modifier" :
 			modifier();
+             echo json_encode($tabRes['msg']);
 		break;
 	}
 	
-    echo json_encode($tabRes);
+   // echo json_encode($tabRes);
 /*
 listerProduitsVendeur();
 echo json_encode($tabRes);*/
