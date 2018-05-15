@@ -79,8 +79,8 @@
 			unset($unModele);
 		}
 	}
-	
-	
+
+	//modified list of products
 	function listerProduitsVendeur()
 	{
 		global $tabRes;
@@ -95,7 +95,7 @@
 			if($ligne=$stmt->fetch(PDO::FETCH_OBJ))
 			    $idm=$ligne->idMembre;
 						
-			$requete2="select nomProduit, description, quantite, statut from produits where produits.idMembre=?";
+			$requete2="select idProduit,pochette,nomProduit, description, quantite, idEvenement,idCategorie,quantite,prix,statut from produits where produits.idMembre=?";
 			$unModele=new membreModele($requete2,array($idm));
 			$stmt=$unModele->executer();
 			$tabRes['listePr']=array();
