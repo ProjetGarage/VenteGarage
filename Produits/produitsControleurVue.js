@@ -160,7 +160,7 @@ function afficherTous(fiches){
     rep+="                    <select placeholder='Evenement' class='form-control col-sd-3' id='evenementPr_mod' name='evenementPr_mod'> ";
     rep+="                            <option value='0'>0</option> ";
     rep+="                          </select> ";
-    rep+="                    <select placeholder='Statut' class='form-control col-sd-3' id='statut_mod' name='statut_mod'> ";
+    rep+="                    <select placeholder='Statut' class='form-control col-sd-3' id='statutProd_mod' name='statutProd_mod'> ";
     rep+="                            <option value='1'>Activée</option> ";
     rep+="                            <option value='0'>Désactivée</option> ";
     rep+="                          </select> ";
@@ -245,7 +245,7 @@ function listerProduits(list){
         rep+="</td><td class='invert'>"+list[i].prix;
         rep+="</td><td class='invert'>"+list[i].statut+"</td>";
         rep+="<td class='invert'>"; 
-        rep+="<button type='button' class='btn btn-theme' data-toggle='modal' data-target='#modifyModalPr' onclick=''>&nbsp;&nbsp;Modifier&nbsp;&nbsp;</button>";
+        rep+="<button type='button' class='btn btn-theme' data-toggle='modal' data-target='#modifyModalPr' onclick=\"document.getElementById('id_prod_mod').value="+list[i].idProduit+";document.getElementById('nomProduit_mod').value='"+list[i].nomProduit+"';document.getElementById('quantiteProd_mod').value="+list[i].quantite+";document.getElementById('prixProd_mod').value="+list[i].prix+";document.getElementById('categorieProd_mod').value="+list[i].idCategorie+";document.getElementById('evenementPr_mod').value="+list[i].idEvenement+";document.getElementById('statutProd_mod').value="+list[i].statut+";document.getElementById('descriptionProd_mod').value='"+list[i].description+"';document.getElementById('srctxt').innerHTML='Photo: "+list[i].pochette+"';\">&nbsp;&nbsp;Modifier&nbsp;&nbsp;</button>";
         rep+="<br><br><button type='button' class='btn btn-theme' data-toggle='modal' data-target='#delModalPr' onclick=''>Supprimer</button></td></tr>";
 	}
     rep+=printtablefooter();
