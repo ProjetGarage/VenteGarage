@@ -113,28 +113,7 @@ function listerProd(){
     
 }
 
-/*function lister(){
-    $.ajax({
-        data: {"action" : "montrerPoints"},
-        type: "POST",
-        dataType: "json",
-        url: "location/locationControleur.php",
-        success: function (reponse){
-                listerP(reponse);
-            },
-    })
-     .done(function( data, textStatus, jqXHR ) {
-         if ( console && console.log ) {
-             console.log( "Success!" );
-         }
-     })
-     .fail(function( jqXHR, textStatus, errorThrown ) {
-         if ( console && console.log ) {
-             console.log( "La solicitud a fallado: " +  errorThrown);
-         }
-    });
-}*/
-function lister(){
+function listerMapProd(){
     var formL = new FormData(document.getElementById('formLocation'));
 	formL.append('action','montrerPoints');
     $.ajax({
@@ -147,6 +126,7 @@ function lister(){
 		contentType : false,
 		processData : false,
         success: function (reponse){
+                console.log('avant!');
                 listerP(reponse);
             },
     })

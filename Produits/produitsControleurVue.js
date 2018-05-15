@@ -41,20 +41,23 @@ function afficher(list){
 function afficherTous(fiches){
 	var taille;
 	var rep="";
-	taille=fiches.length;
-	
-	rep+="<div class='table-users' style='overflow: scroll; height: 500px;'>";
-	rep+="<div class='header'>Liste des produits<span style='float:right;padding-right:10px;cursor:pointer;' onClick=\"$('#contenu').hide();\">X</span></div>";
-	rep+="<table cellspacing='0'>";
-	rep+="<tr><th>PHOTO PRODUIT</th> <th>NOM PRODUIT</th><th>DESCRIPTION</th><th>QUANTITE</th><th>PRIX</th><th>STATUT</th><th>EVENEMENT</th></tr>";
+    if (fiches)
+    {
+        taille=fiches.length;
 
-	                               
-	for(var i=0; i<taille; i++){
-		rep+="</td><td><img src=\"images/"+fiches[i].photoProd+"\" width=80 height=80></td><td>" + fiches[i].nomProduit+"</td><td>"+fiches[i].description+"</td><td>"+fiches[i].quantite+"</td><td>"+fiches[i].prix+"</td><td>"+fiches[i].statut+ "</td><td>"+fiches[i].titreEvenement+"</td></tr>";			 
-	}
-	rep+="</table>";
-	rep+="</div>";
-	$('#contenu').html(rep);
+        rep+="<div class='table-users' style='overflow: scroll; height: 500px;'>";
+        rep+="<div class='header'>Liste des produits<span style='float:right;padding-right:10px;cursor:pointer;' onClick=\"$('#contenu').hide();\">X</span></div>";
+        rep+="<table cellspacing='0'>";
+        rep+="<tr><th>PHOTO PRODUIT</th> <th>NOM PRODUIT</th><th>DESCRIPTION</th><th>QUANTITE</th><th>PRIX</th><th>STATUT</th><th>EVENEMENT</th></tr>";
+
+
+        for(var i=0; i<taille; i++){
+            rep+="</td><td><img src=\"images/"+fiches[i].photoProd+"\" width=80 height=80></td><td>" + fiches[i].nomProduit+"</td><td>"+fiches[i].description+"</td><td>"+fiches[i].quantite+"</td><td>"+fiches[i].prix+"</td><td>"+fiches[i].statut+ "</td><td>"+fiches[i].titreEvenement+"</td></tr>";			 
+        }
+        rep+="</table>";
+        rep+="</div>";
+        $('#contenu').html(rep);
+    }
 }
 
     function listerCat(list){
@@ -131,16 +134,16 @@ function afficherTous(fiches){
     rep+="            <div class='modal-content'>"; 
     rep+="              <div class='modal-header'> ";
     rep+="                <button type='button' class='close' data-dismiss='modal'>&times;</button> ";
-    rep+="                <h3 class='modal-title'>Information de Produits</h3> ";
+    rep+="                <h4 class='modal-title'>Information de Produits</h4> ";
     rep+="              </div> ";
     rep+="              <div class='modal-body'> ";
     rep+="                <div class='col-md-12 single-right-grid-right'> ";
     rep+="                <form class='form-horizontal' id='formModifyPr' enctype='multipart/form-data' action='' method='POST' onSubmit='return valider();'>  ";
-    rep+="                      <input class='form-control' type='text' id='id_prod_mod' name='id_prod_mod' placeholder='Id Produit'  required> ";
-    rep+="                      <input placeholder='Nom Produit' class='form-control' type='text' id='nomProduit_mod' name='nomProduit_mod' required> ";
-    rep+="                     <input class='form-control' type='number' step='0.01' id='quantiteProd_mod' name='quantiteProd_mod' placeholder='Quantite' required>";
-    rep+="                      <input placeholder='Prix' class='form-control' type='number' step='0.01' id='prixProd_mod' name='prixProd_mod' required> ";
-    rep+="                    <select placeholder='Categorie Produit' class='form-control col-sd-3' id='categorieProd_mod' name='categorieProd_mod'> ";
+    rep+="                      <input class='form-control' type='text' id='id_prod_mod' name='id_prod_mod' style='visibility:hidden' placeholder='Id Produit'  required> ";
+    rep+="                      <br>Nom Produit: <input placeholder='Nom Produit' class='form-control' type='text' id='nomProduit_mod' name='nomProduit_mod' required> ";
+    rep+="                     <br>Quantite:&nbsp;&nbsp;&nbsp;&nbsp; <input class='form-control' type='number' step='0.01' id='quantiteProd_mod' name='quantiteProd_mod' placeholder='Quantite' required>";
+    rep+="                      <br>Prix:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input placeholder='Prix' class='form-control' type='number' step='0.01' id='prixProd_mod' name='prixProd_mod' required> ";
+    rep+="                    <br>Categorie:&nbsp;&nbsp; <select placeholder='<br>Categorie Produit' class='form-control col-sd-3' id='categorieProd_mod' name='categorieProd_mod'> ";
     rep+="                            <option value='1'>Accessoires Informatiques</option> ";
     rep+="                            <option value='2'>Appareils electromenagers</option> ";
     rep+="                            <option value='3'>Appareils photo et cameras</option> ";
@@ -157,15 +160,15 @@ function afficherTous(fiches){
     rep+="                            <option value='14'>velos</option> ";
     rep+="                            <option value='15'>vetements</option> ";
     rep+="                          </select> ";
-    rep+="                    <select placeholder='Evenement' class='form-control col-sd-3' id='evenementPr_mod' name='evenementPr_mod'> ";
+    rep+="                    <br>Evenement: <select placeholder='Evenement' class='form-control col-sd-3' id='evenementPr_mod' name='evenementPr_mod'>";
     rep+="                            <option value='0'>0</option> ";
     rep+="                          </select> ";
-    rep+="                    <select placeholder='Statut' class='form-control col-sd-3' id='statutProd_mod' name='statutProd_mod'> ";
+    rep+="                    <br>Statut:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select placeholder='Statut' class='form-control col-sd-10' id='statutProd_mod' name='statutProd_mod'> ";
     rep+="                            <option value='1'>Activée</option> ";
     rep+="                            <option value='0'>Désactivée</option> ";
     rep+="                          </select> ";
     rep+="                        <p id='srctxt' name='srctxt'>Photo: </p><input class='form-control' type='file' id='photoProd_mod' name='photoProd_mod' placeholder='Photo'> ";
-    rep+="                        <input size='255' maxlength='255' type='textarea' class='form-control' placeholder='Description de produit' rows='4' cols='50' id='descriptionProd_mod'  name='descriptionProd_mod'> ";
+    rep+="                        <br>Description: <input size='255' maxlength='255' type='textarea' class='form-control' placeholder='Description de produit' rows='4' cols='50' id='descriptionProd_mod'  name='descriptionProd_mod'> ";
     rep+="                            <div class='modal-footer'> ";
     rep+="                                <input type='submit' class='btn btn-theme' value='Modifier'> ";
     rep+="                                <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button> ";

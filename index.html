@@ -104,12 +104,12 @@
                         <label class="control-label">Produit</label>
                         <input type="text" id="produit_txt" class="form-control select-header" placeholder="Chercher..." name="produit" aria-describedby="basic-addon1">
                         <div class="form-group">
-                            <input type="button" class="btn btn-theme" value="Montrer Produits" onClick="lister();" >
+                            <input type="button" class="btn btn-theme" value="Montrer Produits" onClick="listerMapProd();" >
                             <input type="button" value="Montrer Events" class="btn btn-theme" onClick="listerEvMap();" >
                             <input type="submit" value="Reset" class="btn btn-theme">
                         </div>
-                        <input type="button" value="Lister Prod" onClick="charger();">
-                         <input type="button" value="Lister Events" onClick="listerEvent();">
+                        <input type="button" value="Lister Prod" style='display: none' onClick="charger();">
+                         <input type="button" value="Lister Events" style='display: none'onClick="listerEvent(); ">
 
                     </div>
                 </form>	
