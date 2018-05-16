@@ -2,52 +2,13 @@
 	require("../includes/modele.inc.php");
 	$tabRes=array();
 	
-	function remplirListeCategories()
-	{
-		global $tabRes;	
-		$tabRes['action']="listeC";
-		 try{
-			$requete="SELECT * FROM categories";
-			$unModele=new membreModele($requete,array());
-			$stmt=$unModele->executer();
-			$tabRes['listeCat']=array();
-			while($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
-			    $tabRes['listeCat'][]=$ligne;
-			 }
-		}catch(Exception $e){
-		}finally{
-			unset($unModele);
-		}
-		
-	}
 	
-	function remplirListeEvenements()
+	function afficherEv()
 	{
 		global $tabRes;	
-		$tabRes['action']="listeE";
+		$tabRes['action']="afficherEv";
 		 try{
 			$requete="SELECT * FROM evenements";
-			$unModele=new membreModele($requete,array());
-			$stmt=$unModele->executer();
-			$tabRes['listeEve']=array();
-			while($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
-			    $tabRes['listeEve'][]=$ligne;
-			 }
-		}catch(Exception $e){
-		}finally{
-			unset($unModele);
-		}
-		
-	}
-	
-	
-	
-	function afficherP()
-	{
-		global $tabRes;	
-		$tabRes['action']="afficherP";
-		 try{
-			$requete="SELECT * FROM produits";
 			$unModele=new membreModele($requete,array());
 			$stmt=$unModele->executer();
 			$tabRes['listePt']=array();
@@ -58,30 +19,11 @@
 		}finally{
 			unset($unModele);
 		}
-		
 	}
 	
-	
-	function lister()
-	{
-		global $tabRes;
-		$tabRes['action']="listeP";
-		try{
-			 $requete="select prix, photoProd, nomProduit, Produits.description, quantite, statut, titreEvenement from Produits,Photoproduits,Evenements where Produits.IdProduit= Photoproduits.IdProduit AND Produits.IdProduit= Evenements.IdProduit";
-			 $unModele=new membreModele($requete,array());
-			 $stmt=$unModele->executer();
-			 $tabRes['listeProd']=array();
-			 while($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
-			    $tabRes['listeProd'][]=$ligne;
-			}
-		}catch(Exception $e){
-		}finally{
-			unset($unModele);
-		}
-	}
 
 	//modified list of products
-	function listerProduitsVendeur()
+	function listerEvenementsVendeur()
 	{
 		global $tabRes;
         if (!isset ($_SESSION['courriel']))
@@ -91,7 +33,7 @@
 	       $courriel=$_SESSION['courriel'];        
 		//$courriel=$_POST['courrielMembrePr'];
         //$courriel='alexandra@yahoo.com';
-		$tabRes['action']="listeProduits";
+		$tabRes['action']="listeEvenements";
 		
 		try{
 			$requete1="SELECT idMembre FROM Membres WHERE courriel = ?";
@@ -99,8 +41,8 @@
 			$stmt=$unModele->executer();
 			if($ligne=$stmt->fetch(PDO::FETCH_OBJ))
 			    $idm=$ligne->idMembre;
-						
-			$requete2="select idProduit,pochette,nomProduit, description, quantite, idMembre,idCategorie,quantite,prix,statut from produits where produits.idMembre=?";
+			//$requete2="select e.idMembre,e.idEvenement,e.pochette,e.titreEvenement,e.description,e.idAdresse,a.formatted_addr,e.dateDebut,e.dateFin from evenements e, adresses a where e.idAdresse=a.idAdresse and e.idMembre=idmembre";			
+			$requete2="CALL `proc_events_address`(?);";
 			$unModele=new membreModele($requete2,array($idm));
 			$stmt=$unModele->executer();
 			$tabRes['listePr']=array();
@@ -114,23 +56,6 @@
 	}
 	
 	
-	function listerC()
-	{
-		global $tabRes;
-		$tabRes['action']="listeCat";
-		try{
-			 $requete="select nomCategorie, nomProduit, description, quantite, statut from produits, categories where produits.idCategorie = categories.idCategorie ORDER BY categories.nomCategorie" ;
-			 $unModele=new membreModele($requete,array());
-			 $stmt=$unModele->executer();
-			 $tabRes['listePC']=array();
-			 while($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
-			    $tabRes['listePC'][]=$ligne;
-			}
-		}catch(Exception $e){
-		}finally{
-			unset($unModele);
-		}
-	}
 	//modified enregistrer de produits
 	function enregistrerPr(){
         session_start();
@@ -193,7 +118,7 @@
     }
 	
 
-	function enleverProd(){
+	function enleverEv(){
 		global $tabRes;
         $idProduit=$_POST['idProdE'];		
 		try{
@@ -226,32 +151,8 @@
 		}
 	}
 	
-	
-	function obtenirFiche(){
-		global $tabRes;
-		$idProduit=$_POST['nomProduit3'];	
-		
-		$tabRes['action']="obtenirFiche";
-				
-		$requete="select Produits.description,Produits.nomProduit,Produits.statut,Produits.prix,Produits.quantite,Membres.courriel, Photoproduits.photoProd, Evenements.titreEvenement, Categories.* from Produits,Photoproduits,Evenements,Categories,Membres where Produits.idMembre= Membres.idMembre AND Produits.idProduit= Photoproduits.idProduit AND Produits.idCategorie= Categories.idCategorie AND Produits.idProduit= Evenements.idProduit AND Produits.idProduit=?"; 
-		try{
-			 $unModele=new membreModele($requete,array($idProduit));
-			 $stmt=$unModele->executer();
-			 $tabRes['fiche']=array();
-			 if($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
-			    $tabRes['fiche']=$ligne;
-				$tabRes['OK']=true;
-			}
-			else{
-				$tabRes['OK']=false;
-			}
-		}catch(Exception $e){
-		}finally{
-			unset($unModele);
-		}
-	}
 
-function modifierProd(){
+function modifierEv(){
 		global $tabRes;	
         $pochette="";
         $idProduit=$_POST['id_prod_mod'];
@@ -303,53 +204,29 @@ function modifierProd(){
 	 $action=$_POST['action'];
 	
 	switch($action){
-		case "enregistrerProduit" :
-		     enregistrerPr();
+		case "enregistrerEvent" :
+		     enregistrerEv();
              echo json_encode($tabRes['msg']);
-            listerProduitsVendeur();
+            listerEventsVendeur();
 		break;
 		
-		case "enleverProduit" :
-		     enleverProd();
+		case "enleverEvent" :
+		     enleverEv();
              echo json_encode($tabRes['msg']);
 		break;
 		
-        case "listeP" :
-			lister();
+		case "afficherEv" :
+			afficherEv();
 		break;
 		
-		case "listeCat" :
-			listerC();
-		break;
-		
-		case "listeC" :
-			remplirListeCategories();
-		break;
-		
-		case "afficherP" :
-			afficherP();
-		break;
-		
-		case "listeProduits" :
-			listerProduitsVendeur();
+		case "listeEvents" :
+			listerEventsVendeur();
             echo json_encode($tabRes);
 		break;
-		
-		case "listeE" :
-			remplirListeEvenements();
-		break;
-				
-		case "obtenirFiche" :
-			obtenirFiche();
-		break;
-		case "modifierProduit" :
-			modifierProd();
+		case "modifierEvent" :
+			modifierEv();
              echo json_encode($tabRes['msg']);
 		break;
 	}
 	
-   // echo json_encode($tabRes);
-/*
-listerProduitsVendeur();
-echo json_encode($tabRes);*/
 ?>

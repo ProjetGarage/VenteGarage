@@ -77,7 +77,8 @@ function afficherTous(fiches){
     }
     function printtableheader()
     {
-     var rep="<button type='button' class='btn btn-theme' data-toggle='modal' data-target='#newModalPr'>Ajouter</button>";
+     var rep="<div><button type='button' class='btn btn-theme' data-toggle='modal' data-target='#newModalPr'>Ajouter</button>";
+     rep+="&nbsp;<button type='button' class='btn btn-theme' onclick='listerProduitsVendeur();'>Rafraîchir</button></div>";
     rep+="<div class='privacy about'>";
     rep+="<div class='col-md-8 address_form'>";
     rep+="<!-- Modal -->";
@@ -193,8 +194,8 @@ function afficherTous(fiches){
       rep+="<p class='modal-text'>Êtes-vous sûr de vouloir supprimer l'enregistrement?</p> ";
       rep+="  <p class='modal-text'>Prod No:&nbsp;<input type='text' id='idProdE' name='idProdE'  style='border: none;background-color:white;' readonly></p> ";
       rep+="  <div class='modal-footer'> ";
-      rep+=" <input type='button' class='btn btn-theme' value='OK' onclick='enleverPr()'> ";
-      rep+=" <button type='submit' class='btn btn-default' data-dismiss='modal'>Cancel</button> ";
+      rep+=" <input type='submit' class='btn btn-theme' value='OK' onclick='enleverPr()'> ";
+      rep+=" <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button> ";
       rep+="  </div> ";
       rep+="</form> ";
       rep+="   </div> ";

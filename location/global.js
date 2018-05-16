@@ -3,6 +3,7 @@ function main()
     initMap();
     charger();
     chargerVilles();
+    listerProduitsVendeur();
 }
   function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
