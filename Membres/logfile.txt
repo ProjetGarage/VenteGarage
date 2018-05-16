@@ -20,3 +20,9 @@ Status:OK lat:45.4537778 lon:-73.4629285 addr:Brossard, QC J4Y 1P8, Canada posta
 addcomp:5
 Status:OK lat:45.4537778 lon:-73.4629285 addr:Brossard, QC J4Y 1P8, Canada postalcode:J4Y 1P8 sublocalite:
 Membre bien enregistre!
+addcomp:5
+Status:OK lat:45.4499288 lon:-73.46092 addr:Brossard, QC J4Y 1E8, Canada postalcode:J4Y 1E8 sublocalite:
+Membre bien enregistre!
+addcomp:6
+Status:OK lat:45.4888958 lon:-73.4785466 addr:Greenfield Park, QC J4V 2A2, Canada postalcode:J4V 2A2 sublocalite:Greenfield Park
+Membre bien enregistre!

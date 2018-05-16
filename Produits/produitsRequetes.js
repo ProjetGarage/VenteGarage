@@ -102,9 +102,9 @@ function afficherP() {
 	
 }
 
-function enregistrer(){
-	var formProduit = new FormData(document.getElementById('formEnreg'));
-	formProduit.append('action','enregistrer');
+function enregistrerProd(){
+	var formProduit = new FormData(document.getElementById('formEnregPr'));
+	formProduit.append('action','enregistrerProduit');
 	$.ajax({
 		type :'POST',
 		url : 'Produits/produitsControleur.php',
@@ -116,7 +116,7 @@ function enregistrer(){
 					//produitsVue(reponse);
 		},
 		fail : function (err){
-		   
+		   console.log
 		}
 	});
 }
@@ -191,7 +191,7 @@ function obtenirFiche(){
 function modifierProd(){
 	var leForm=document.getElementById('formModifyPr');
 	var formProduit = new FormData(leForm);
-	formProduit.append('action','modifier');
+	formProduit.append('action','modifierProduit');
 	$.ajax({
 		type : 'POST',
 		url : 'Produits/produitsControleur.php',
@@ -204,6 +204,7 @@ function modifierProd(){
 					produitsVue(reponse);
 		},
 		fail : function (err){
+            console.log(err);
 		}
 	});
 }

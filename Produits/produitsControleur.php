@@ -84,7 +84,11 @@
 	function listerProduitsVendeur()
 	{
 		global $tabRes;
-		$courriel=$_POST['courrielMembrePr'];
+        session_start();
+        $courriel="";
+        if (isset ($_SESSION['courriel']))
+	       $courriel=$_SESSION['courriel'];        
+		//$courriel=$_POST['courrielMembrePr'];
         //$courriel='alexandra@yahoo.com';
 		$tabRes['action']="listeProduits";
 		
@@ -126,18 +130,34 @@
 			unset($unModele);
 		}
 	}
-	
-	function enregistrer(){
+	//modified enregistrer de produits
+	function enregistrerPr(){
+        session_start();
 		global $tabRes;	
-		$produit=$_POST['nomProduit'];
-	    $idCategorie=$_POST['categorie'];
-	    $courriel=$_POST['courriel'];
-	    $quantite=$_POST['quantite'];
-	    $description=$_POST['description'];
-		$statut=$_POST['statut'];
-		$evenement=$_POST['evenement'];
-		$prix=$_POST['prix'];
-		
+		$nomProduit=$_POST['nomProduit'];
+	    $idCategorie=$_POST['categorieProd'];
+        $courriel="";
+        if (isset ($_SESSION['courriel']))
+	       $courriel=$_SESSION['courriel'];
+        else
+            $courriel='alexandra@yahoo.com';
+	    $quantite=$_POST['quantiteProd'];
+	    $description=$_POST['descriptionProd'];
+		$statut=$_POST['statutProd'];
+		$prix=$_POST['prixProd'];
+		$dossier="../pochette/";
+        $nomPochette=sha1($nomProduit.time());
+        $pochette="avatar.jpg";
+        if($_FILES['photoProd']['tmp_name']!==""){
+                $tmp = $_FILES['photoProd']['tmp_name'];
+                $fichier= $_FILES['photoProd']['name'];
+                $extension=strrchr($fichier,'.');
+                @move_uploaded_file($tmp,$dossier.$nomPochette.$extension);
+                // Enlever le fichier temporaire chargé
+                @unlink($tmp); //effacer le fichier temporaire
+                $pochette=$nomPochette.$extension;
+        }
+        
 		try{
 			$requete1="SELECT idMembre FROM Membres WHERE courriel = ?";
 			$unModele=new membreModele($requete1,array($courriel));
@@ -145,23 +165,15 @@
 			if($ligne=$stmt->fetch(PDO::FETCH_OBJ))
 			    $idm=$ligne->idMembre;
 			
-			$photoProd=$unModele->verserFichier("images", "photoProd",$produit);
-			$requete2="INSERT INTO Produits VALUES(0,?,?,?,?,?,?,?,?)";
-			$unModele=new membreModele($requete2,array($produit,$description,$quantite,$idCategorie,$idm,$evenement,$statut,$prix));
+			$requete2="INSERT INTO produits (nomProduit,description,quantite,idCategorie,idMembre,statut,prix,pochette) VALUES(?,?,?,?,?,?,?,?)";
+			$unModele=new membreModele($requete2,array($nomProduit,$description,$quantite,$idCategorie,$idm,$statut,$prix,$pochette));
 			$stmt=$unModele->executer();
 			
-			$requete3="SELECT MAX(idProduit) AS LastID FROM Produits";
-			$unModele=new membreModele($requete3,array());
-			$stmt=$unModele->executer();
-			if($ligne=$stmt->fetch(PDO::FETCH_OBJ))
-			    $idp=$ligne->LastID;
-			
-			$requete4="INSERT INTO Photoproduits VALUES(0,?,?)";
-			$unModele=new membreModele($requete4,array($idp,$photoProd));
-			$stmt=$unModele->executer();
-			$tabRes['action']="enregistrer";
+			$tabRes['action']="enregistrerProduit";
 			$tabRes['msg']="produit bien enregistre";
 		}catch(Exception $e){
+            $tabRes['action']="enregistrerProduit";
+			$tabRes['msg']="Error: ".$e;
 		}finally{
 			unset($unModele);
 		}
@@ -229,7 +241,7 @@
 		}
 	}
 
-function modifier(){
+function modifierProd(){
 		global $tabRes;	
         $pochette="";
         $idProduit=$_POST['id_prod_mod'];
@@ -274,68 +286,15 @@ function modifier(){
 			unset($unModele);
 		}
 	}
-/*	
-	function modifier(){
-		global $tabRes;	
-		$nomProduit=$_POST['nomProduit4'];
-		$nomCategorie=$_POST['categorie4'];
-	    $courriel=$_POST['courriel4'];
-	    $quantite=$_POST['quantite4'];
-	    $description=$_POST['description4'];
-		$statut=$_POST['statut4'];
-		
-		$evenement=$_POST['evenement4'];
-		$prix=$_POST['prix4'];
-	
-		try{
-					
-			$requete1="select * from Produits where nomProduit=?";
-			$unModele=new membreModele($requete1,array($nomProduit));
-			$stmt=$unModele->executer();
-			$ligne=$stmt->fetch(PDO::FETCH_OBJ);
-			$idProduite=$ligne->idProduit;
-			
-			
-			$requete2="select Categories.idCategorie from Categories,Produits where Produits.idCategorie=Categories.IdCategorie And Produits.idProduit=?";
-			$unModele=new membreModele($requete2,array($idProduite));
-			$stmt=$unModele->executer();
-			$ligne=$stmt->fetch(PDO::FETCH_OBJ);
-			$idCategorie=$ligne->idCategorie;
-			
-			$requete3="select Evenements.idEvenement from Evenements,Produits where Produits.idEvenement=Evenements.IdEvenement and Produits.idProduit=?";
-			$unModele=new membreModele($requete3,array($idProduite));
-			$stmt=$unModele->executer();
-			$ligne=$stmt->fetch(PDO::FETCH_OBJ);
-			$idEvenement=$ligne->idEvenement;
-			
-			$requete4="select * from Membres where Membres.courriel=?";
-			$unModele=new membreModele($requete4,array($courriel));
-			$stmt=$unModele->executer();
-			$ligne=$stmt->fetch(PDO::FETCH_OBJ);
-			$idMembref=$ligne->idMembre;
-		 
-		    
-		
-			$requete5="UPDATE Produits SET nomProduit=?,idCategorie=?, quantite=?, statut=?, description=?, prix=?, idEvenement=?, idMembre=? WHERE idProduit=?";
-			$unModele=new membreModele($requete5,array($nomProduit,$idCategorie,$quantite,$statut,$description,$prix,$idEvenement,$idMembref,$idProduite));
-			$stmt=$unModele->executer();
-			$tabRes['action']="modifier";
-			$tabRes['msg']="Produit $idProduit bien modifie";
-			
-		}catch(Exception $e){
-		}finally{
-			unset($unModele);
-		}
-	}
-*/		
+
 	//******************************************************
 	//Contrôleur
 
 	 $action=$_POST['action'];
 	
 	switch($action){
-		case "enregistrer" :
-		     enregistrer();
+		case "enregistrerProduit" :
+		     enregistrerPr();
 		break;
 		
 		case "enlever" :
@@ -370,8 +329,8 @@ function modifier(){
 		case "obtenirFiche" :
 			obtenirFiche();
 		break;
-		case "modifier" :
-			modifier();
+		case "modifierProduit" :
+			modifierProd();
              echo json_encode($tabRes['msg']);
 		break;
 	}

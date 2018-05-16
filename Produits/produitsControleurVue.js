@@ -97,26 +97,31 @@ function afficherTous(fiches){
     rep+="              <input class='form-control' type='number' step='0.01' id='quantiteProd' name='quantiteProd' placeholder='Quantite de produit' required>";
     rep+="              <input placeholder='Prix de produit' class='form-control' type='number' step='0.01' id='prixProd' name='prixProd' required> ";
     rep+="";
-    rep+="                <select class='form-control col-sd-3' id='categorieProd' name='categorieProd' placeholder='Categorie Produit'> ";
-    rep+="                  <option value='Action'>Action</option> ";
-    rep+="                  <option value='Comedy'>Comedy</option> ";
-    rep+="                  <option value='Drame'>Drame</option> ";
-    rep+="                  <option value='Enfants'>Enfants</option>"; 
-    rep+="                  <option value='Science Fiction'>Science Fiction</option> ";
-    rep+="                </select> ";
-    rep+="                <select class='form-control col-sd-3' id='evenementPr' name='evenementPr' placeholder='Titre d'événement'> ";
-    rep+="                  <option value='Action'>Action</option> ";
-    rep+="                  <option value='Comedy'>Comedy</option> ";
-    rep+="                  <option value='Drame'>Drame</option> ";
-    rep+="                  <option value='Enfants'>Enfants</option>"; 
-    rep+="                  <option value='Science Fiction'>Science Fiction</option> ";
-    rep+="                </select> ";
-    rep+="";
-    rep+="              <input type='text' id='statut' class='form-control' name='statut' placeholder='Statut du produit' size='1' required> ";
+    rep+="                    <br>Categorie:&nbsp;&nbsp; <select placeholder='<br>Categorie Produit' class='form-control col-sd-3' id='categorieProd' name='categorieProd'> ";
+    rep+="                            <option value='1'>Accessoires Informatiques</option> ";
+    rep+="                            <option value='2'>Appareils electromenagers</option> ";
+    rep+="                            <option value='3'>Appareils photo et cameras</option> ";
+    rep+="                            <option value='4'>Art et objet de collection</option> ";
+    rep+="                            <option value='5'>Articles pour bebes</option> ";
+    rep+="                            <option value='6'>Articles de sport et exercice</option> ";
+    rep+="                            <option value='7'>Autre</option> ";
+    rep+="                            <option value='8'>Bijoux et montres</option> ";
+    rep+="                            <option value='9'>Equipements electroniques</option> ";
+    rep+="                            <option value='10'>Instruments de musique</option> ";
+    rep+="                            <option value='11'>Objets gratuits</option> ";
+    rep+="                            <option value='12'>Sante et besoins speciaux</option> ";
+    rep+="                            <option value='13'>Souliers</option> ";
+    rep+="                            <option value='14'>velos</option> ";
+    rep+="                            <option value='15'>vetements</option> ";
+    rep+="                          </select> ";
+    rep+="                    <br>Statut:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select placeholder='Statut' class='form-control col-sd-10' id='statutProd' name='statutProd'> ";
+    rep+="                            <option value='1'>Activée</option> ";
+    rep+="                            <option value='0'>Désactivée</option> ";
+    rep+="                          </select> ";
     rep+="              <input type='file' id='photoProd' name='photoProd' placeholder='Photo'> ";
     rep+="              <input type='text' placeholder='Description du produit' class='form-control' id='descriptionProd'  name='descriptionProd'>"; 
     rep+="                  <div class='modal-footer'> ";
-    rep+="                      <input type='submit' class='btn btn-theme' value='Envoyer'> ";
+    rep+="                      <input type='button' class='btn btn-theme' value='Envoyer' onclick='enregistrerProd();'> ";
     rep+="                      <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button> ";
     rep+="                  </div> ";
     rep+="";
@@ -299,9 +304,9 @@ function afficherFiche(rep){
 	var action=reponse.action;
  //   console.log(action);   
 	switch(action){
-		case "enregistrer" :
+		case "enregistrerProduit" :
 		case "enlever" :
-		case "modifier":
+		case "modifierProduit":
 		     alert(reponse.msg);   
 		break;
 		
