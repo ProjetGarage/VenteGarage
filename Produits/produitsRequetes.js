@@ -143,10 +143,10 @@ function remplirListeCategories() {
 
 
 
-function enlever(){
-	var leForm=document.getElementById('formEnlever');
+function enleverPr(){
+	var leForm=document.getElementById('formEnleverPr');
 	var formProduit = new FormData(leForm);
-	formProduit.append('action','enlever');//alert(formFilm.get("action"));
+	formProduit.append('action','enleverProduit');//alert(formFilm.get("action"));
 	$.ajax({
 		type : 'POST',
 		url : 'Produits/produitsControleur.php',

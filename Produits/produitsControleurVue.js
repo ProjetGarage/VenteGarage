@@ -189,12 +189,12 @@ function afficherTous(fiches){
       rep+=" <div class='modal-content'>"; 
       rep+="   <div class='modal-header'> ";
       rep+="<button type='button' class='close' data-dismiss='modal'>&times;</button> ";
-      rep+="<form id='formEnleverPr' action='../serveur/enlever.php' method='POST' onSubmit='return validerNum('numE');'> ";
+      rep+="<form id='formEnleverPr' method='POST'> ";
       rep+="<p class='modal-text'>Êtes-vous sûr de vouloir supprimer l'enregistrement?</p> ";
-      rep+="  <p class='modal-text'>Prod No:&nbsp;<input type='text' id='numE' name='num'  style='border: none;background-color:white;' readonly></p> ";
+      rep+="  <p class='modal-text'>Prod No:&nbsp;<input type='text' id='idProdE' name='idProdE'  style='border: none;background-color:white;' readonly></p> ";
       rep+="  <div class='modal-footer'> ";
-      rep+=" <input type='submit' class='btn btn-theme' value='OK'> ";
-      rep+=" <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button> ";
+      rep+=" <input type='button' class='btn btn-theme' value='OK' onclick='enleverPr()'> ";
+      rep+=" <button type='submit' class='btn btn-default' data-dismiss='modal'>Cancel</button> ";
       rep+="  </div> ";
       rep+="</form> ";
       rep+="   </div> ";
@@ -252,7 +252,7 @@ function listerProduits(list){
         rep+="</td><td class='invert'>"+list[i].statut+"</td>";
         rep+="<td class='invert'>"; 
         rep+="<button type='button' class='btn btn-theme' data-toggle='modal' data-target='#modifyModalPr' onclick=\"document.getElementById('id_prod_mod').value="+list[i].idProduit+";document.getElementById('nomProduit_mod').value='"+list[i].nomProduit+"';document.getElementById('quantiteProd_mod').value="+list[i].quantite+";document.getElementById('prixProd_mod').value="+list[i].prix+";document.getElementById('categorieProd_mod').value="+list[i].idCategorie+";document.getElementById('idMembre_mod').value="+list[i].idMembre+";document.getElementById('statutProd_mod').value="+list[i].statut+";document.getElementById('descriptionProd_mod').value='"+list[i].description+"';document.getElementById('srctxt').innerHTML='Photo: "+list[i].pochette+"';\">&nbsp;&nbsp;Modifier&nbsp;&nbsp;</button>";
-        rep+="<br><br><button type='button' class='btn btn-theme' data-toggle='modal' data-target='#delModalPr' onclick=''>Supprimer</button></td></tr>";
+        rep+="<br><br><button type='button' class='btn btn-theme' data-toggle='modal' data-target='#delModalPr' onclick=\"document.getElementById('idProdE').value="+list[i].idProduit+";\">Supprimer</button></td></tr>";
 	}
     rep+=printtablefooter();
 	$('#contenu').html(rep);
@@ -305,7 +305,7 @@ function afficherFiche(rep){
  //   console.log(action);   
 	switch(action){
 		case "enregistrerProduit" :
-		case "enlever" :
+		case "enleverProduit" :
 		case "modifierProduit":
 		     alert(reponse.msg);   
 		break;

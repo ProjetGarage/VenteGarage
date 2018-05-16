@@ -178,29 +178,38 @@
 			unset($unModele);
 		}
 	}
+    
+    function enleverFichier($dossier,$photoProd){
+            $rmPoc="../$dossier/".$photoProd;
+            $tabFichiers = glob("../$dossier/*");
+            foreach($tabFichiers as $fichier){
+              if(is_file($fichier) && $fichier==trim($rmPoc)) {
+                // enlever le fichier
+                unlink($fichier);
+                break;
+              }
+            }
+    }
 	
-	function enlever(){
+
+	function enleverProd(){
 		global $tabRes;
-        $idProduit=$_POST['nomProduit2'];		
-		
+        $idProduit=$_POST['idProdE'];		
 		try{
 			$requete1="SELECT nomProduit FROM Produits WHERE idProduit=?";
 			$unModele=new membreModele($requete1,array($idProduit));
 			$stmt=$unModele->executer();
 			if($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
-				$requete2="SELECT photoProd FROM Photoproduits WHERE idProduit=?";
+				$requete2="SELECT pochette FROM produits WHERE idProduit=?";
 			    $unModele=new membreModele($requete2,array($idProduit));
 			    $stmt=$unModele->executer();
 				if($ligne=$stmt->fetch(PDO::FETCH_OBJ))
-			    $chaine=$ligne->photoProd;
-				$unModele->enleverFichier("images",$chaine);
-				
+                {
+			         $chaine=$ligne->pochette;
+				    enleverFichier("pochette",$chaine);
+                }
 				$requete3="DELETE FROM produits WHERE idProduit=?";
 				$unModele=new membreModele($requete3,array($idProduit));
-				$stmt=$unModele->executer();
-				
-				$requete4="DELETE FROM Photoproduits WHERE idProduit=?";
-				$unModele=new membreModele($requete4,array($idProduit));
 				$stmt=$unModele->executer();
 				
 				$tabRes['action']="enlever";
@@ -295,10 +304,12 @@ function modifierProd(){
 	switch($action){
 		case "enregistrerProduit" :
 		     enregistrerPr();
+             echo json_encode($tabRes['msg']);
 		break;
 		
-		case "enlever" :
-		     enlever();
+		case "enleverProduit" :
+		     enleverProd();
+             echo json_encode($tabRes['msg']);
 		break;
 		
         case "listeP" :
