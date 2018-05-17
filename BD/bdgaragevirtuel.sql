@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 16 mai 2018 à 00:01
+-- Généré le :  jeu. 17 mai 2018 à 09:14
 -- Version du serveur :  5.7.17
 -- Version de PHP :  5.6.30
 
@@ -28,12 +28,15 @@ DELIMITER $$
 --
 -- Procédures
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_events_address` (IN `idmembre` INT)  NO SQL
+select e.idMembre,e.idEvenement,e.pochette,e.titreEvenement,e.description,e.idAdresse,a.formatted_addr,e.dateDebut,e.dateFin
+from evenements e, adresses a where e.idAdresse=a.idAdresse and e.idMembre=idmembre$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_vendors` (IN `region` VARCHAR(20))  NO SQL
-SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.statut) as pstatus,e.status as estatus
-  FROM adresses a,produits p,membres m,evenements e
-   WHERE a.idMembre=p.idMembre and m.idMembre=a.idMembre and
-  p.idEvenement=e.idEvenement and a.region=region
-  group by p.idEvenement,p.idMembre$$
+SELECT p.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,p.idEvenement,max(p.statut) as pstatus
+  FROM adresses a,produits p,membres m
+   WHERE a.idMembre=p.idMembre and m.idMembre=a.idMembre and a.region=region
+  group by p.idMembre$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_vendors_event` (IN `region` VARCHAR(50))  NO SQL
 SELECT e.idEvenement,e.idMembre,m.prenom,m.nom,a.latitude,a.longitude,a.formatted_addr,a.codepostal,a.sublocalite,a.ville,a.region,e.dateFin
@@ -154,7 +157,9 @@ INSERT INTO `adresses` (`idAdresse`, `idMembre`, `numeroCivique`, `nomRue`, `vil
 (77, 124, 2525, 'boul rome', 'brossard', 'J4Y1P8', 'qc', '45.453777800', '-73.462928500', NULL, ''),
 (78, 125, 2525, 'boul rome', 'brossard', 'J4Y1P8', 'qc', '45.453777800', '-73.462928500', 'Brossard, QC J4Y 1P8, Canada', ''),
 (79, 126, 2325, 'boul Rome', 'Brossard', 'J4Y1P8', 'QC', '45.453777800', '-73.462928500', 'Brossard, QC J4Y 1P8, Canada', ''),
-(80, 127, 2325, 'boul Rome', 'Brossard', 'J4Y1P8', 'QC', '45.453777800', '-73.462928500', 'Brossard, QC J4Y 1P8, Canada', '');
+(80, 127, 2325, 'boul Rome', 'Brossard', 'J4Y1P8', 'QC', '45.453777800', '-73.462928500', 'Brossard, QC J4Y 1P8, Canada', ''),
+(81, 128, 2400, 'Rue Neuville', 'Brossard', 'J4Y1E8', 'QC', '45.449928800', '-73.460920000', 'Brossard, QC J4Y 1E8, Canada', ''),
+(82, 129, 480, 'Rue Fairfield', 'greenfield park', 'J4V2A2', '', '45.488895800', '-73.478546600', 'Greenfield Park, QC J4V 2A2, Canada', 'Greenfield Park');
 
 -- --------------------------------------------------------
 
@@ -17145,20 +17150,27 @@ CREATE TABLE `evenements` (
   `titreEvenement` varchar(150) CHARACTER SET latin1 NOT NULL,
   `description` varchar(255) CHARACTER SET latin1 NOT NULL,
   `idAdresse` int(8) NOT NULL,
-  `dateDebut` datetime NOT NULL,
-  `dateFin` datetime NOT NULL,
-  `idMembre` int(11) NOT NULL
+  `dateDebut` date NOT NULL,
+  `dateFin` date NOT NULL,
+  `idMembre` int(11) NOT NULL,
+  `pochette` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Déchargement des données de la table `evenements`
 --
 
-INSERT INTO `evenements` (`idEvenement`, `titreEvenement`, `description`, `idAdresse`, `dateDebut`, `dateFin`, `idMembre`) VALUES
-(0, 'No event', 'No event', 0, '2018-05-01 00:00:00', '2018-05-01 00:00:00', 0),
-(1, 'Vente de garage Brossard', 'Vente de garage Brossard Description', 22, '2018-05-01 00:00:00', '2018-05-08 00:00:00', 33),
-(2, 'Vente de garage Brossard', 'Gran vente de Garage de demenager', 3, '2018-05-10 00:00:00', '2018-05-17 00:00:00', 32),
-(4, 'test', 'test', 22, '2018-05-08 00:00:00', '2018-05-12 23:00:00', 31);
+INSERT INTO `evenements` (`idEvenement`, `titreEvenement`, `description`, `idAdresse`, `dateDebut`, `dateFin`, `idMembre`, `pochette`) VALUES
+(0, 'No event', 'No event', 0, '2018-05-01', '2018-05-01', 0, ''),
+(1, 'Vente de garage Brossard', 'Vente de garage Brossard Description', 82, '2018-05-01', '2018-05-08', 33, ''),
+(2, 'Vente de garage Brossard22', 'Gran vente de Garage de demenager', 3, '2018-05-15', '2018-05-19', 32, 'eb4bfedc27b3054b24e784644d2560102db9afe5.jpg'),
+(4, 'test', 'test', 22, '2018-05-08', '2018-05-12', 31, ''),
+(5, 'Evento', 'test', 0, '2018-05-12', '2018-05-12', 128, 'e96b57f9a87520c08ec6e7ac6406309d746fd8f9.JPG'),
+(6, 'Evento', 'test', 0, '2018-05-10', '2018-05-20', 128, 'ba88be2f6a394e50e9280d0a2a0539b4b4be01d0.jpg'),
+(7, 'test', 'dadada', 0, '2018-05-17', '2018-05-04', 128, 'avatar_event.jpg'),
+(8, 'test', 'asdasas', 0, '2018-05-04', '2018-05-25', 128, 'avatar_event.jpg'),
+(9, 'fhgfhgfh', 'gggjh', 0, '2018-05-12', '2018-05-05', 128, 'avatar_event.jpg'),
+(10, 'Evento', 'Descript', 81, '2018-05-11', '2018-05-26', 128, 'avatar_event.jpg');
 
 -- --------------------------------------------------------
 
@@ -17205,7 +17217,9 @@ INSERT INTO `membres` (`idMembre`, `prenom`, `nom`, `telephone`, `dateNaissance`
 (124, 'Ale', 'Jim', '2222222222', '20/01/2000', 'M', 'avatar.jpg', 'alejjimn@gmail.com', '1f98a0fa07eca41de3b4090407a7c39c952db5aa'),
 (125, 'Ale', 'Jim', '2222222222', '20/01/2000', 'M', 'avatar.jpg', 'alejjimn2@gmail.com', '7f6a6a8c3708cb39eecdcf3c1449ae6fc5692c5c'),
 (126, 'Alejandra', 'Jimenez', '4345556677', '30/01/2000', 'F', 'cab1953741004d6a20fc47288245c08d24e31175.JPG', 'alejjimn3@gmail.com', 'f91096663e5cf61f471da294d23c99a6a29075c7'),
-(127, 'AIDA', 'Jimenez', '6667778889', '20/04/2000', 'M', 'avatar.jpg', 'alejjimn44@gmail.com', 'f91096663e5cf61f471da294d23c99a6a29075c7');
+(127, 'AIDA', 'Jimenez', '6667778889', '20/04/2000', 'M', 'avatar.jpg', 'alejjimn44@gmail.com', 'f91096663e5cf61f471da294d23c99a6a29075c7'),
+(128, 'Ale', 'Jimenez', '4345556677', '30/01/2000', 'F', 'avatar.jpg', 'ale2222@gmail.com', '5edb5e9ed01de3b6bf5d96f38650673412e0bef1'),
+(129, 'Paul', 'Doe', '5657888888', '20/04/2000', 'F', 'a61a3c323435163e2c9f22425bdbdef2ff5ddd82.JPG', 'paul@gmail.com', '5edb5e9ed01de3b6bf5d96f38650673412e0bef1');
 
 -- --------------------------------------------------------
 
@@ -17254,7 +17268,6 @@ CREATE TABLE `produits` (
   `idCategorie` int(8) NOT NULL,
   `idMembre` int(8) NOT NULL,
   `statut` int(1) NOT NULL,
-  `idEvenement` int(8) NOT NULL,
   `prix` decimal(8,2) NOT NULL,
   `pochette` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -17263,10 +17276,13 @@ CREATE TABLE `produits` (
 -- Déchargement des données de la table `produits`
 --
 
-INSERT INTO `produits` (`idProduit`, `nomProduit`, `description`, `quantite`, `idCategorie`, `idMembre`, `statut`, `idEvenement`, `prix`, `pochette`) VALUES
-(1, 'bycicle', 'beautiful bycicle', 1, 14, 32, 1, 0, '0.00', ''),
-(16, 'none', 'none', 0, 0, 32, 0, 0, '0.00', ''),
-(17, 'bouteille allaitement playtex', 'Plusieurs biberons en etat neuf', 4, 5, 1, 1, 0, '12.99', '');
+INSERT INTO `produits` (`idProduit`, `nomProduit`, `description`, `quantite`, `idCategorie`, `idMembre`, `statut`, `prix`, `pochette`) VALUES
+(1, 'bycicle222', 'beautiful bycicle', 10, 3, 32, 0, '0.00', '2431de78930aea5db31e63b713f1cea141ac36a9.JPG'),
+(16, 'none', 'none', 0, 2, 32, 1, '0.00', ''),
+(17, 'bouteille allaitement playtex', 'Plusieurs biberons en etat neuf', 4, 5, 1, 1, '12.99', ''),
+(18, 'asdadas', 'aada', 11, 5, 32, 0, '12.00', '19bca8ac15f794dbe0cf4948e55d07d5854bf55c.jpg'),
+(21, 'Mesa2', 'dddd', 1, 9, 129, 1, '100.00', '44ec63fe9e134a71d2a913924c617858d0fe91d3.jpg'),
+(27, 'silla22', 'silla', 1, 5, 128, 1, '12.00', 'a4d82edabba524edde74e9198771055e7c7b3dee.jpg');
 
 -- --------------------------------------------------------
 
@@ -17356,7 +17372,7 @@ ALTER TABLE `abonnements`
 -- AUTO_INCREMENT pour la table `adresses`
 --
 ALTER TABLE `adresses`
-  MODIFY `idAdresse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `idAdresse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 --
 -- AUTO_INCREMENT pour la table `categories`
 --
@@ -17371,12 +17387,12 @@ ALTER TABLE `emplacements`
 -- AUTO_INCREMENT pour la table `evenements`
 --
 ALTER TABLE `evenements`
-  MODIFY `idEvenement` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idEvenement` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT pour la table `membres`
 --
 ALTER TABLE `membres`
-  MODIFY `idMembre` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `idMembre` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 --
 -- AUTO_INCREMENT pour la table `photoproduits`
 --
@@ -17386,7 +17402,7 @@ ALTER TABLE `photoproduits`
 -- AUTO_INCREMENT pour la table `produits`
 --
 ALTER TABLE `produits`
-  MODIFY `idProduit` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `idProduit` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- Contraintes pour les tables déchargées
 --

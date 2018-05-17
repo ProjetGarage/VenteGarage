@@ -151,32 +151,34 @@
 
 	function enleverEv(){
 		global $tabRes;
-        $idProduit=$_POST['idProdE'];		
+        $idEvenement=$_POST['idEvE'];		
 		try{
-			$requete1="SELECT nomProduit FROM Produits WHERE idProduit=?";
-			$unModele=new membreModele($requete1,array($idProduit));
+			$requete1="SELECT titreEvenement FROM evenements WHERE idEvenement=?";
+			$unModele=new membreModele($requete1,array($idEvenement));
 			$stmt=$unModele->executer();
 			if($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
-				$requete2="SELECT pochette FROM produits WHERE idProduit=?";
-			    $unModele=new membreModele($requete2,array($idProduit));
+				$requete2="SELECT pochette FROM evenements WHERE idEvenement=?";
+			    $unModele=new membreModele($requete2,array($idEvenement));
 			    $stmt=$unModele->executer();
 				if($ligne=$stmt->fetch(PDO::FETCH_OBJ))
                 {
 			         $chaine=$ligne->pochette;
 				    enleverFichier("pochette",$chaine);
                 }
-				$requete3="DELETE FROM produits WHERE idProduit=?";
-				$unModele=new membreModele($requete3,array($idProduit));
+				$requete3="DELETE FROM evenements WHERE idEvenement=?";
+				$unModele=new membreModele($requete3,array($idEvenement));
 				$stmt=$unModele->executer();
 				
-				$tabRes['action']="enlever";
-				$tabRes['msg']="Produit ".$idProduit." bien enleve";
+				$tabRes['action']="enleverEvent";
+				$tabRes['msg']="Evenement ".$idEvenement." bien enleve";
 			}
 			else{
-				$tabRes['action']="enlever";
-				$tabRes['msg']="Produit".$idProduit." introuvable";
+				$tabRes['action']="enleverEvent";
+				$tabRes['msg']="Evenement".$idEvenement." introuvable";
 			}
 		}catch(Exception $e){
+                $tabRes['action']="enleverEvent";
+				$tabRes['msg']="Error: ".$e;
 		}finally{
 			unset($unModele);
 		}

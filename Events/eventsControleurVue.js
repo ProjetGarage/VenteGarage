@@ -76,7 +76,7 @@
       rep+="<p class='modal-text'>Êtes-vous sûr de vouloir supprimer l'enregistrement?</p> ";
       rep+="  <p class='modal-text'>Ev No:&nbsp;<input type='text' id='idEvE' name='idEvE'  style='border: none;background-color:white;' readonly></p> ";
       rep+="  <div class='modal-footer'> ";
-      rep+=" <input type='submit' class='btn btn-theme' value='OK' onclick='enleverPr()'> ";
+      rep+=" <input type='submit' class='btn btn-theme' value='OK' onclick='enleverEv()'> ";
       rep+=" <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button> ";
       rep+="  </div> ";
       rep+="</form> ";
