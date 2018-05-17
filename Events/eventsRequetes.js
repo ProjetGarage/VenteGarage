@@ -1,34 +1,33 @@
 //requêtes events
-
+//liste les evenements
 function listerEventsVendeur()
 {
-	var formProduit = new FormData(document.getElementById('formRecherche'));
-	formProduit.append('action','listeEvents');
+	var formEvent = new FormData(document.getElementById('formRecherche'));
+	formEvent.append('action','listeEvents');
 	$.ajax({
 		type : 'POST',
 		url :  'Events/eventsControleur.php',
-		data : formProduit,
+		data : formEvent,
 		dataType : 'json', //text pour le voir en format de string
 		contentType : false,
 		processData : false,
 		success : function (reponse){//alert(reponse);
-					 eventsVue(reponse);
+					eventsVue(reponse);
 		},
 		fail : function (err){
 		   console.log(err);
 		}
 	});	
-
 }
 
 function remplirListeE()
 {
 	var formProduit = new FormData();
-	formProduit.append('action','listeE');
+	formEvent.append('action','listeE');
 	$.ajax({
 		type : 'POST',
 		url :  'Events/eventsControleur.php',
-		data : formProduit,
+		data : formEvent,
 		dataType : 'json', //text pour le voir en format de string
 		contentType : false,
 		processData : false,
@@ -42,13 +41,13 @@ function remplirListeE()
 
 }
 
-function lister() {
+function listerEvenements() {
 	var formProduit = new FormData();
-	formProduit.append('action','listeEv');
+	formEvent.append('action','listeEv');
 	$.ajax({
 		type : 'POST',
 		url :  'Events/eventsControleur.php',
-		data : formProduit,
+		data : formEvent,
 		dataType : 'json', //text pour le voir en format de string
 		contentType : false,
 		processData : false,
@@ -63,8 +62,8 @@ function lister() {
 }
 
 function afficherEv() {
-	var formProduit = new FormData();
-	formProduit.append('action','afficherP');//alert(formFilm.get("action"));
+	var formEvent = new FormData();
+	formEvent.append('action','afficherP');//alert(formFilm.get("action"));
 	$.ajax({
 		type : 'POST',
 		url :  'Events/eventsControleur.php',
@@ -82,13 +81,13 @@ function afficherEv() {
 	
 }
 
-function enregistrerProd(){
-	var formProduit = new FormData(document.getElementById('formEnregEv'));
-	formProduit.append('action','enregistrerEvents');
+function enregistrerEv(){
+	var formEvent = new FormData(document.getElementById('formEnregEv'));
+	formEvent.append('action','enregistrerEvents');
 	$.ajax({
 		type :'POST',
 		url : 'Events/eventsControleur.php',
-		data : formProduit,
+		data : formEvent,
 		dataType : 'text', //text pour le voir en format de string
 		contentType : false,
 		processData : false,
@@ -104,12 +103,12 @@ function enregistrerProd(){
 
 function enleverEv(){
 	var leForm=document.getElementById('formEnleverEv');
-	var formProduit = new FormData(leForm);
-	formProduit.append('action','enleverEvent');//alert(formFilm.get("action"));
+	var formEvent = new FormData(leForm);
+	formEvent.append('action','enleverEvent');//alert(formFilm.get("action"));
 	$.ajax({
 		type : 'POST',
 		url : 'Events/eventsControleur.php',
-		data : formProduit,//leForm.serialize(),
+		data : formEvent,//leForm.serialize(),
 		contentType : false, //Enlever ces deux directives si vous utilisez serialize()
 		processData : false,
 		dataType : 'json', //text pour le voir en format de string
@@ -123,16 +122,16 @@ function enleverEv(){
 
 
 function modifierEv(){
-	var leForm=document.getElementById('formModifyPr');
-	var formProduit = new FormData(leForm);
-	formProduit.append('action','modifierProduit');
+	var leForm=document.getElementById('formModifyEv');
+	var formEvent = new FormData(leForm);
+	formEvent.append('action','modifierEvent');
 	$.ajax({
 		type : 'POST',
 		url : 'Events/eventsControleur.php',
-		data : formProduit,
+		data : formEvent,
 		contentType : false, 
 		processData : false,
-		dataType : 'text', 
+		dataType : 'json', 
 		success : function (reponse){alert(reponse);
 					//$('#divFormFiche').hide();
 					eventsVue(reponse);

@@ -32,6 +32,10 @@
     <script language="javascript" src="Produits/produitsRequetes.js"></script>    
     <script language="javascript" src="Produits/produitsControleurVue.js"></script>
     
+      <!--------------------------- Produits links ---------------------->
+    <script language="javascript" src="Events/eventsRequetes.js"></script>    
+    <script language="javascript" src="Events/eventsControleurVue.js"></script>
+    
     <!---------------------------  ------------------------------>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-- Ca me bloc a l'affisage de cart user!!!!>
@@ -42,6 +46,7 @@
     Author URL: https://bootstrapmade.com
 	======================================================= -->
 </head>
+    
 <body onload="main();">
 	<!-- navbar -->
 	<div class="navbar-wrapper">
@@ -216,7 +221,8 @@
     <section>
     <br>    
     <form id="formRecherche" method="post">
-        <input type="button" class="btn btn-theme" onclick="listerProduitsVendeur();" value="Lister Produits" style="visibility: hidden"/>
+        <input type="button" class="btn btn-theme" onclick="listerProduitsVendeur();" value="Lister Produits" />
+        <input type="button" class="btn btn-theme" onclick="listerEventsVendeur();" value="Lister Ventes de Garage" />
     </form>
     <!-- administration de produits -->
     <h4 class="latest-text">Mes Produits</h4> 

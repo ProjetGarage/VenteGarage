@@ -11,9 +11,9 @@
 			$requete="SELECT * FROM evenements";
 			$unModele=new membreModele($requete,array());
 			$stmt=$unModele->executer();
-			$tabRes['listePt']=array();
+			$tabRes['listeEv']=array();
 			while($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
-			    $tabRes['listePt'][]=$ligne;
+			    $tabRes['listeEv'][]=$ligne;
 			 }
 		}catch(Exception $e){
 		}finally{
@@ -22,7 +22,7 @@
 	}
 	
 
-	//modified list of products
+	//modified list of evenements
 	function listerEvenementsVendeur()
 	{
 		global $tabRes;
@@ -31,9 +31,10 @@
         $courriel="";
         if (isset ($_SESSION['courriel']))
 	       $courriel=$_SESSION['courriel'];        
+        
 		//$courriel=$_POST['courrielMembrePr'];
-        //$courriel='alexandra@yahoo.com';
-		$tabRes['action']="listeEvenements";
+        $courriel='alexandra@yahoo.com';
+		$tabRes['action']="listeEvents";
 		
 		try{
 			$requete1="SELECT idMembre FROM Membres WHERE courriel = ?";
@@ -42,14 +43,15 @@
 			if($ligne=$stmt->fetch(PDO::FETCH_OBJ))
 			    $idm=$ligne->idMembre;
 			//$requete2="select e.idMembre,e.idEvenement,e.pochette,e.titreEvenement,e.description,e.idAdresse,a.formatted_addr,e.dateDebut,e.dateFin from evenements e, adresses a where e.idAdresse=a.idAdresse and e.idMembre=idmembre";			
-			$requete2="CALL `proc_events_address`(?);";
+			$requete2="select e.idEvenement,e.idMembre,e.pochette,e.titreEvenement,concat(a.numeroCivique,' ',a.nomRue,',',a.ville,' ','QC') as idAddress,e.description,e.dateDebut,e.dateFin from evenements e,adresses a where e.idAdresse=a.idAdresse and e.idmembre=?";
 			$unModele=new membreModele($requete2,array($idm));
 			$stmt=$unModele->executer();
-			$tabRes['listePr']=array();
+			$tabRes['listeEv']=array();
 			while($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
-			   $tabRes['listePr'][]=$ligne;
+			   $tabRes['listeEv'][]=$ligne;
 			}
 		}catch(Exception $e){
+            //$tabRes['listeEv']="Error: ".$e;
 		}finally{
 			unset($unModele);
 		}
@@ -57,48 +59,55 @@
 	
 	
 	//modified enregistrer de produits
-	function enregistrerPr(){
+	function enregistrerEv(){
         session_start();
 		global $tabRes;	
-		$nomProduit=$_POST['nomProduit'];
-	    $idCategorie=$_POST['categorieProd'];
+	    $titreEvenement=$_POST['titreEvenement'];
         $courriel="";
         if (isset ($_SESSION['courriel']))
 	       $courriel=$_SESSION['courriel'];
         else
             $courriel='alexandra@yahoo.com';
-	    $quantite=$_POST['quantiteProd'];
-	    $description=$_POST['descriptionProd'];
-		$statut=$_POST['statutProd'];
-		$prix=$_POST['prixProd'];
+	    $dateDebut=$_POST['dateDebut'];
+	    $dateFin=$_POST['dateFin'];
+		$descriptionEv=$_POST['descriptionEv'];
 		$dossier="../pochette/";
-        $nomPochette=sha1($nomProduit.time());
-        $pochette="avatar.jpg";
-        if($_FILES['photoProd']['tmp_name']!==""){
-                $tmp = $_FILES['photoProd']['tmp_name'];
-                $fichier= $_FILES['photoProd']['name'];
+        $nomPochette=sha1($titreEvenement.time());
+        $pochette="avatar_event.jpg";
+        if($_FILES['photoEv']['tmp_name']!==""){
+                $tmp = $_FILES['photoEv']['tmp_name'];
+                $fichier= $_FILES['photoEv']['name'];
                 $extension=strrchr($fichier,'.');
                 @move_uploaded_file($tmp,$dossier.$nomPochette.$extension);
                 // Enlever le fichier temporaire chargé
                 @unlink($tmp); //effacer le fichier temporaire
                 $pochette=$nomPochette.$extension;
         }
-        
+        else{
+            $dossier="../img/";
+        }
 		try{
+            $ida=0;
 			$requete1="SELECT idMembre FROM Membres WHERE courriel = ?";
 			$unModele=new membreModele($requete1,array($courriel));
 			$stmt=$unModele->executer();
 			if($ligne=$stmt->fetch(PDO::FETCH_OBJ))
 			    $idm=$ligne->idMembre;
 			
-			$requete2="INSERT INTO produits (nomProduit,description,quantite,idCategorie,idMembre,statut,prix,pochette) VALUES(?,?,?,?,?,?,?,?)";
-			$unModele=new membreModele($requete2,array($nomProduit,$description,$quantite,$idCategorie,$idm,$statut,$prix,$pochette));
+            $requete3="SELECT idAdresse FROM adresses where idMembre='?'";
+			$unModele=new membreModele($requete3,array($idm));
+			$stmt=$unModele->executer();
+            if($ligne=$stmt->fetch(PDO::FETCH_OBJ))
+			    $ida=$ligne->idAdresse;
+            
+			$requete2="INSERT INTO evenements (titreEvenement,description,idAdresse,dateDebut,dateFin,idMembre,pochette) VALUES(?,?,?,?,?,?,?)";
+			$unModele=new membreModele($requete2,array($titreEvenement,$descriptionEv,$ida,$dateDebut,$dateFin,$idm,$pochette));
 			$stmt=$unModele->executer();
 			
-			$tabRes['action']="enregistrerProduit";
-			$tabRes['msg']="produit bien enregistre";
+			$tabRes['action']="enregistrerEvents";
+			$tabRes['msg']="Evenement bien enregistre";
 		}catch(Exception $e){
-            $tabRes['action']="enregistrerProduit";
+            $tabRes['action']="enregistrerEvents";
 			$tabRes['msg']="Error: ".$e;
 		}finally{
 			unset($unModele);
@@ -155,43 +164,48 @@
 function modifierEv(){
 		global $tabRes;	
         $pochette="";
-        $idProduit=$_POST['id_prod_mod'];
-		$nomProduit=$_POST['nomProduit_mod'];
-		$idCategorie=$_POST['categorieProd_mod'];
+        $idMembre=$_POST['idMembre_mod'];
+        $idEvenement=$_POST['idEvenement_mod'];
+		$titreEvenement=$_POST['titreEvenement_mod'];
+		$dateDebut=$_POST['dateDebut_mod'];
 	    //$courriel=$_POST['courriel4'];
-	    $quantite=$_POST['quantiteProd_mod'];
-	    $description=$_POST['descriptionProd_mod'];
-		$statut=$_POST['statutProd_mod'];
+	    $dateFin=$_POST['dateFin_mod'];
+	    $descriptionEv=$_POST['descriptionEv_mod'];
         $dossier="../pochette/";
-        $nomPochette=sha1($nomProduit.time());
+        $nomPochette=sha1($titreEvenement.time());
         //$pochette="avatar.jpg";
-        if($_FILES['photoProd_mod']['tmp_name']!==""){
-                $tmp = $_FILES['photoProd_mod']['tmp_name'];
-                $fichier= $_FILES['photoProd_mod']['name'];
+        if($_FILES['photoEv_mod']['tmp_name']!==""){
+                $tmp = $_FILES['photoEv_mod']['tmp_name'];
+                $fichier= $_FILES['photoEv_mod']['name'];
                 $extension=strrchr($fichier,'.');
                 @move_uploaded_file($tmp,$dossier.$nomPochette.$extension);
                 // Enlever le fichier temporaire chargé
                 @unlink($tmp); //effacer le fichier temporaire
                 $pochette=$nomPochette.$extension;
         }
-		$prix=$_POST['prixProd_mod'];
-        $idMembref=$_POST['idMembre_mod'];
 		try{
-		    if ($pochette!="")
+            if ($dateFin>$dateDebut)
             {
-                $requete5="UPDATE Produits SET nomProduit=?,idCategorie=?, quantite=?, statut=?, description=?, prix=?, idMembre=?,pochette=? WHERE idProduit=?";
-                $unModele=new membreModele($requete5,array($nomProduit,$idCategorie,$quantite,$statut,$description,$prix,$idMembref,$pochette,$idProduit));
+                if ($pochette!="")
+                {
+                    $requete5="UPDATE evenements SET titreEvenement=?,dateDebut=?, dateFin=?, description=?,pochette=? WHERE idEvenement=?";
+                    $unModele=new membreModele($requete5,array($titreEvenement,$dateDebut,$dateFin,$descriptionEv,$pochette,$idEvenement));
+                }
+                else
+                {
+                    $requete5="UPDATE evenements SET titreEvenement=?,dateDebut=?, dateFin=?, description=? WHERE idEvenement=?";
+                    $unModele=new membreModele($requete5,array($titreEvenement,$dateDebut,$dateFin,$descriptionEv,$idEvenement));
+                }
+                $stmt=$unModele->executer();
+                $tabRes['action']="modifier";
+                $tabRes['msg']="Evenement $idEvenement bien modifie";
             }
             else
             {
-			    $requete5="UPDATE Produits SET nomProduit=?,idCategorie=?, quantite=?, statut=?, description=?, prix=?, idMembre=? WHERE idProduit=?";
-                $unModele=new membreModele($requete5,array($nomProduit,$idCategorie,$quantite,$statut,$description,$prix,$idMembref,$idProduit));
+                $tabRes['msg']="La date de debut doit etre avant de la date final!";    
             }
-			$stmt=$unModele->executer();
-			$tabRes['action']="modifier";
-			$tabRes['msg']="Produit $idProduit bien modifie";
-			
 		}catch(Exception $e){
+            //$tabRes['msg']="Error ".$e;
             
 		}finally{
 			unset($unModele);
@@ -202,12 +216,12 @@ function modifierEv(){
 	//Contrôleur
 
 	 $action=$_POST['action'];
-	
+
 	switch($action){
-		case "enregistrerEvent" :
+		case "enregistrerEvents" :
 		     enregistrerEv();
              echo json_encode($tabRes['msg']);
-            listerEventsVendeur();
+            listerEvenementsVendeur();
 		break;
 		
 		case "enleverEvent" :
@@ -220,7 +234,7 @@ function modifierEv(){
 		break;
 		
 		case "listeEvents" :
-			listerEventsVendeur();
+			listerEvenementsVendeur();
             echo json_encode($tabRes);
 		break;
 		case "modifierEvent" :
@@ -228,5 +242,8 @@ function modifierEv(){
              echo json_encode($tabRes['msg']);
 		break;
 	}
-	
+/*		
+listerEvenementsVendeur();
+          echo json_encode($tabRes);
+*/
 ?>
