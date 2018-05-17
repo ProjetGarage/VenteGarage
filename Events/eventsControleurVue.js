@@ -1,7 +1,7 @@
     function printtableheaderE()
     {
      var rep="<div><button type='button' class='btn btn-theme' data-toggle='modal' data-target='#newModalEv'>Ajouter</button>";
-     rep+="&nbsp;<button type='button' class='btn btn-theme' onclick='listerEvenementsVendeur();'>Rafraîchir</button></div>";
+     rep+="&nbsp;<button type='button' class='btn btn-theme' onclick='listerEventsVendeur();'>Rafraîchir</button></div>";
     rep+="<div class='privacy about'>";
     rep+="<div class='col-md-8 address_form'>";
     rep+="<!-- Modal -->";

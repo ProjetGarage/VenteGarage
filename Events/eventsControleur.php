@@ -66,8 +66,7 @@
         $courriel="";
         if (isset ($_SESSION['courriel']))
 	       $courriel=$_SESSION['courriel'];
-        else
-            $courriel='alexandra@yahoo.com';
+        $courriel='alexandra@yahoo.com';
 	    $dateDebut=$_POST['dateDebut'];
 	    $dateFin=$_POST['dateFin'];
 		$descriptionEv=$_POST['descriptionEv'];
@@ -87,25 +86,48 @@
             $dossier="../img/";
         }
 		try{
-            $ida=0;
-			$requete1="SELECT idMembre FROM Membres WHERE courriel = ?";
-			$unModele=new membreModele($requete1,array($courriel));
-			$stmt=$unModele->executer();
-			if($ligne=$stmt->fetch(PDO::FETCH_OBJ))
-			    $idm=$ligne->idMembre;
-			
-            $requete3="SELECT idAdresse FROM adresses where idMembre='?'";
-			$unModele=new membreModele($requete3,array($idm));
-			$stmt=$unModele->executer();
-            if($ligne=$stmt->fetch(PDO::FETCH_OBJ))
-			    $ida=$ligne->idAdresse;
-            
-			$requete2="INSERT INTO evenements (titreEvenement,description,idAdresse,dateDebut,dateFin,idMembre,pochette) VALUES(?,?,?,?,?,?,?)";
-			$unModele=new membreModele($requete2,array($titreEvenement,$descriptionEv,$ida,$dateDebut,$dateFin,$idm,$pochette));
-			$stmt=$unModele->executer();
-			
-			$tabRes['action']="enregistrerEvents";
-			$tabRes['msg']="Evenement bien enregistre";
+            if($dateFin>=$dateDebut)
+            {
+                $requete1="SELECT idMembre FROM Membres WHERE courriel = ?";
+                $unModele=new membreModele($requete1,array($courriel));
+                $stmt=$unModele->executer();
+                if($ligne=$stmt->fetch(PDO::FETCH_OBJ))
+                    $idm=$ligne->idMembre;
+                if ($idm)
+                {   $ida=0; 
+                    $requete3="SELECT max(idAdresse) as idAdd FROM adresses where idMembre=?";
+                    $unModele=new membreModele($requete3,array($idm));
+                    $stmt=$unModele->executer();
+                    if($ligne=$stmt->fetch(PDO::FETCH_OBJ))
+                        $ida=$ligne->idAdd;
+                    if ($ida!=0)
+                    {
+                        $requete2="INSERT INTO evenements (titreEvenement,description,idAdresse,dateDebut,dateFin,idMembre,pochette) VALUES(?,?,?,?,?,?,?)";
+                        $unModele=new membreModele($requete2,array($titreEvenement,$descriptionEv,$ida,$dateDebut,$dateFin,$idm,$pochette));
+                        $stmt=$unModele->executer();
+
+                        $tabRes['action']="enregistrerEvents";
+                        $tabRes['msg']="Evenement bien enregistre";
+                    }
+                    else
+                    {
+                        $tabRes['action']="enregistrerEvents";
+                        $tabRes['msg']="Membre sans adresse valide: $ida Membre: $idm";
+                    }
+
+
+                }
+                else
+                {
+                    $tabRes['action']="enregistrerEvents";
+                    $tabRes['msg']="Membre Inexistente";
+                }
+            }
+            else
+            {
+                $tabRes['action']="enregistrerEvents";
+                $tabRes['msg']="La date de debut doit etre avant de la date final!";
+            }    
 		}catch(Exception $e){
             $tabRes['action']="enregistrerEvents";
 			$tabRes['msg']="Error: ".$e;
@@ -184,7 +206,7 @@ function modifierEv(){
                 $pochette=$nomPochette.$extension;
         }
 		try{
-            if ($dateFin>$dateDebut)
+            if ($dateFin>=$dateDebut)
             {
                 if ($pochette!="")
                 {
