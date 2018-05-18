@@ -13,6 +13,7 @@
 	<link href="color/default.css" rel="stylesheet">
 	<link rel="shortcut icon" href="img/favicon.ico">	
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
     <!--------------------------- Membre links ------------------------------>
 	<script language="javascript" src="js/membre.js"></script>
 	<script language="javascript" src="Membres/membresRequetes.js"></script>
@@ -26,7 +27,15 @@
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoImA-iDx34KQ1O18cY7Wr7GHyKUx8-UM&callback=initMap">
-    </script>	
+    </script>
+    <!--------------------------- Produits links ---------------------->
+    <script language="javascript" src="Produits/produitsRequetes.js"></script>    
+    <script language="javascript" src="Produits/produitsControleurVue.js"></script>
+    
+      <!--------------------------- Produits links ---------------------->
+    <script language="javascript" src="Events/eventsRequetes.js"></script>    
+    <script language="javascript" src="Events/eventsControleurVue.js"></script>
+    
     <!---------------------------  ------------------------------>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-- Ca me bloc a l'affisage de cart user!!!!>
@@ -37,6 +46,7 @@
     Author URL: https://bootstrapmade.com
 	======================================================= -->
 </head>
+    
 <body onload="main();">
 	<!-- navbar -->
 	<div class="navbar-wrapper">
@@ -66,7 +76,7 @@
 					</nav>
 				</div>
 			</div>
-			<div id="messages"></div>
+			<button id="myBtn" class="btn btn-theme" data-toggle="modal" data-target="#newmodal" style="visibility: hidden">Open Modal</button>
 		</div>	
 	</div>
 	<!-- Header area -->
@@ -100,12 +110,12 @@
                         <label class="control-label">Produit</label>
                         <input type="text" id="produit_txt" class="form-control select-header" placeholder="Chercher..." name="produit" aria-describedby="basic-addon1">
                         <div class="form-group">
-                            <input type="button" class="btn btn-theme" value="Montrer Produits" onClick="lister();" >
+                            <input type="button" class="btn btn-theme" value="Montrer Produits" onClick="listerMapProd();" >
                             <input type="button" value="Montrer Events" class="btn btn-theme" onClick="listerEvMap();" >
                             <input type="submit" value="Reset" class="btn btn-theme">
                         </div>
-                        <input type="button" value="Lister Prod" onClick="charger();">
-                         <input type="button" value="Lister Events" onClick="listerEvent();">
+                        <input type="button" value="Lister Prod" style='display: none' onClick="charger();">
+                         <input type="button" value="Lister Events" style='display: none'onClick="listerEvent(); ">
 
                     </div>
                 </form>	
@@ -194,8 +204,44 @@
 		});
 	</script>    
     </section>
+    <section>
+    <div class="modal video-modal fade" id="newmodal" tabindex="-1" role="dialog" aria-labelledby="newmodal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div id="messages">Connexion & Devenir membre</div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				</div>
+		</div>
+	   </div>
+    </div>
+    </section>
 	<!-- end spacer section -->
 	<!-- section: team -->
+    <section>
+    <br>    
+    <form id="formRecherche" method="post">
+        <input type="button" class="btn btn-theme" onclick="listerProduitsVendeur();" value="Lister Produits" />
+        <input type="button" class="btn btn-theme" onclick="listerEventsVendeur();" value="Lister Ventes de Garage" />
+    </form>
+    <!-- administration de produits -->
+    <h4 class="latest-text">Mes Produits</h4> 
+    <div class="ads-grid_shop container"> 
+    <div id="contenu" class="shop_inner_inf">
+    </div> 
+    <br> 
+    <hr> 
+    </div> 
+    <!-- administration de produits -->
+    <h4 class="latest-text">Mes Events</h4> 
+    <div class="ads-grid_shop container"> 
+    <div id="contenuEv" class="shop_inner_inf">
+    </div> 
+    <br> 
+    <hr> 
+    </div>    
+    </section>
+     <!-- administration de produits -->
 	<section id="about" class="section">
 		<div class="container">
 			<h4>Who We Are</h4>

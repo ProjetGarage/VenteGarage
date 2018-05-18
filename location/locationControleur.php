@@ -127,7 +127,7 @@
     function montrerProd(){
             global $action;
             global $rep;
-            $idMembre='32';
+            $idMembre=32;
             //$region=$_POST['region'];
             //$localite=$_POST['localite'];
             //$ville=$_POST['ville'];

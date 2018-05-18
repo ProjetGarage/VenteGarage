@@ -82,13 +82,7 @@
 	<!-- Header area -->
 	<div class="section">
         <div>
-            <div class="row row_style">
-                <div id="map" class="col-sm-10"></div>
-                <div class="col-sm-2">
-                    <br><br>
-                    <div id="products" class="col-sm-8"></div>    
-                </div>
-            </div>
+                <div id="map"></div>
         </div>
 		  <div class="well-searchbox">
                 <form id="formLocation" method="POST" class="form-inline">
@@ -107,15 +101,14 @@
                                 <option value="">Category 1</option>
                                 <option value="">Category 2</option>
                             </select>
-                        <label class="control-label">Produit</label>
-                        <input type="text" id="produit_txt" class="form-control select-header" placeholder="Chercher..." name="produit" aria-describedby="basic-addon1">
+                        <label class="control-label" style="display: none">Produit</label>
+                        <input style="display: none" type="text" id="produit_txt" class="form-control select-header" placeholder="Chercher..." name="produit" aria-describedby="basic-addon1">
                         <div class="form-group">
                             <input type="button" class="btn btn-theme" value="Montrer Produits" onClick="listerMapProd();" >
                             <input type="button" value="Montrer Events" class="btn btn-theme" onClick="listerEvMap();" >
                             <input type="submit" value="Reset" class="btn btn-theme">
                         </div>
-                        <input type="button" value="Lister Prod" style='display: none' onClick="charger();">
-                         <input type="button" value="Lister Events" style='display: none'onClick="listerEvent(); ">
+
 
                     </div>
                 </form>	
@@ -233,7 +226,7 @@
     <hr> 
     </div> 
     <!-- administration de produits -->
-    <h4 class="latest-text">Mes Events</h4> 
+    <h4 class="latest-text">Mes Ventes de Garage</h4> 
     <div class="ads-grid_shop container"> 
     <div id="contenuEv" class="shop_inner_inf">
     </div> 
@@ -244,14 +237,14 @@
      <!-- administration de produits -->
 	<section id="about" class="section">
 		<div class="container">
-			<h4>Who We Are</h4>
+			<h4>Qui nous sommes?</h4>
 			<div class="row">
 				<div class="span4 offset1">
 					<div>
-						<h2>We live with <strong>creativity</strong></h2>
+					<br><br>
+						<center><h2>Des futurs développeurs Web <strong>du Collège Ahuntsic</strong></h2></center>
 						<p>
-							Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe
-							al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores.
+						 	
 						</p>
 					</div>
 				</div>
@@ -264,49 +257,41 @@
 			<div class="row">
 				<div class="span2 offset1 flyIn">
 					<div class="people">
-						<img class="team-thumb img-circle" src="img/team/img-1.jpg" alt="" />
-						<h3>John Doe</h3>
+						<img class="team-thumb img-circle" width="100%" height="100%" src="img/team/img-1.jpg" alt="" />
+						<h3>Marian Perez</h3>
 						<p>
-							Art director
+							Développeur Web
 						</p>
 					</div>
 				</div>
 				<div class="span2 flyIn">
 					<div class="people">
-						<img class="team-thumb img-circle" src="img/team/img-2.jpg" alt="" />
-						<h3>Mike Doe</h3>
+						<img class="team-thumb img-circle" width="100%" height="100%" src="img/team/img-2.jpg" alt="" />
+						<h3>Fayezeh Sharabyani</h3>
 						<p>
-							Web developer
+						  Scrum Master et Développeur Web
 						</p>
 					</div>
 				</div>
 				<div class="span2 flyIn">
 					<div class="people">
-						<img class="team-thumb img-circle" src="img/team/img-3.jpg" alt="" />
-						<h3>Neil Doe</h3>
+						<img class="team-thumb img-circle" width="80%" height="80%"  src="img/team/img-3.jpg" alt="" />
+						<h3>Alejandra Jimenez </h3>
 						<p>
-							Web designer
+							Développeur Web
 						</p>
 					</div>
 				</div>
 				<div class="span2 flyIn">
 					<div class="people">
-						<img class="team-thumb img-circle" src="img/team/img-4.jpg" alt="" />
-						<h3>Mark Joe</h3>
+						<img class="team-thumb img-circle" width="90%" height="90%" src="img/team/img-4.jpg" alt="" />
+						<h3>Natalia Jabinschi</h3>
 						<p>
-							UI designer
+							Développeur Web
 						</p>
 					</div>
 				</div>
-				<div class="span2 flyIn">
-					<div class="people">
-						<img class="team-thumb img-circle" src="img/team/img-5.jpg" alt="" />
-						<h3>Stephen B</h3>
-						<p>
-							Digital imaging
-						</p>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 		<!-- /.container -->

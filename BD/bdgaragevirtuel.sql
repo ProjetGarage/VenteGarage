@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  jeu. 17 mai 2018 à 09:14
+-- Généré le :  ven. 18 mai 2018 à 01:59
 -- Version du serveur :  5.7.17
 -- Version de PHP :  5.6.30
 
@@ -17163,14 +17163,14 @@ CREATE TABLE `evenements` (
 INSERT INTO `evenements` (`idEvenement`, `titreEvenement`, `description`, `idAdresse`, `dateDebut`, `dateFin`, `idMembre`, `pochette`) VALUES
 (0, 'No event', 'No event', 0, '2018-05-01', '2018-05-01', 0, ''),
 (1, 'Vente de garage Brossard', 'Vente de garage Brossard Description', 82, '2018-05-01', '2018-05-08', 33, ''),
-(2, 'Vente de garage Brossard22', 'Gran vente de Garage de demenager', 3, '2018-05-15', '2018-05-19', 32, 'eb4bfedc27b3054b24e784644d2560102db9afe5.jpg'),
 (4, 'test', 'test', 22, '2018-05-08', '2018-05-12', 31, ''),
 (5, 'Evento', 'test', 0, '2018-05-12', '2018-05-12', 128, 'e96b57f9a87520c08ec6e7ac6406309d746fd8f9.JPG'),
 (6, 'Evento', 'test', 0, '2018-05-10', '2018-05-20', 128, 'ba88be2f6a394e50e9280d0a2a0539b4b4be01d0.jpg'),
 (7, 'test', 'dadada', 0, '2018-05-17', '2018-05-04', 128, 'avatar_event.jpg'),
 (8, 'test', 'asdasas', 0, '2018-05-04', '2018-05-25', 128, 'avatar_event.jpg'),
 (9, 'fhgfhgfh', 'gggjh', 0, '2018-05-12', '2018-05-05', 128, 'avatar_event.jpg'),
-(10, 'Evento', 'Descript', 81, '2018-05-11', '2018-05-26', 128, 'avatar_event.jpg');
+(10, 'Evento', 'Descript', 81, '2018-05-11', '2018-05-26', 128, 'avatar_event.jpg'),
+(11, 'Vente de Garage Saint Laurent2', 'Grande Vente de Garage', 22, '2018-05-18', '2018-05-26', 32, 'a23225498a0d352bef1bf25e1858cb92feb02053.jpg');
 
 -- --------------------------------------------------------
 
@@ -17282,7 +17282,8 @@ INSERT INTO `produits` (`idProduit`, `nomProduit`, `description`, `quantite`, `i
 (17, 'bouteille allaitement playtex', 'Plusieurs biberons en etat neuf', 4, 5, 1, 1, '12.99', ''),
 (18, 'asdadas', 'aada', 11, 5, 32, 0, '12.00', '19bca8ac15f794dbe0cf4948e55d07d5854bf55c.jpg'),
 (21, 'Mesa2', 'dddd', 1, 9, 129, 1, '100.00', '44ec63fe9e134a71d2a913924c617858d0fe91d3.jpg'),
-(27, 'silla22', 'silla', 1, 5, 128, 1, '12.00', 'a4d82edabba524edde74e9198771055e7c7b3dee.jpg');
+(27, 'silla22', 'silla', 1, 5, 128, 1, '12.00', 'a4d82edabba524edde74e9198771055e7c7b3dee.jpg'),
+(28, 'Coca cola2', 'chicas', 8, 9, 128, 1, '23.70', '3b79cc5113c068934ca55f236cb62753cfbd654d.bmp');
 
 -- --------------------------------------------------------
 
@@ -17402,7 +17403,7 @@ ALTER TABLE `photoproduits`
 -- AUTO_INCREMENT pour la table `produits`
 --
 ALTER TABLE `produits`
-  MODIFY `idProduit` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `idProduit` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- Contraintes pour les tables déchargées
 --
