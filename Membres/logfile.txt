@@ -29,3 +29,9 @@ Membre bien enregistre!
 addcomp:6
 Status:OK lat:45.4889854 lon:-73.4801706 addr:Greenfield Park, QC J4V 2S2, Canada postalcode:J4V 2S2 sublocalite:Greenfield Park
 Membre bien enregistre!
+addcomp:6
+Status:OK lat:45.5853823 lon:-73.6041453 addr:St. Leonard, QC H1R 1N2, Canada postalcode:H1R 1N2 sublocalite:Saint Leonard
+Membre bien enregistre!
+addcomp:6
+Status:OK lat:45.5771188 lon:-73.5716817 addr:Montreal, QC H1T 1P2, Canada postalcode:H1T 1P2 sublocalite:Rosemont—La Petite-Patrie
+Membre bien enregistre!

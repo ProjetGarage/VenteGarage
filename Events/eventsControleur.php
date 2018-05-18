@@ -33,7 +33,7 @@
 	       $courriel=$_SESSION['courriel'];        
         
 		//$courriel=$_POST['courrielMembrePr'];
-        $courriel='alexandra@yahoo.com';
+        //$courriel='alexandra@yahoo.com';
 		$tabRes['action']="listeEvents";
 		
 		try{
@@ -66,7 +66,7 @@
         $courriel="";
         if (isset ($_SESSION['courriel']))
 	       $courriel=$_SESSION['courriel'];
-        $courriel='alexandra@yahoo.com';
+        //$courriel='alexandra@yahoo.com';
 	    $dateDebut=$_POST['dateDebut'];
 	    $dateFin=$_POST['dateFin'];
 		$descriptionEv=$_POST['descriptionEv'];
@@ -81,9 +81,6 @@
                 // Enlever le fichier temporaire chargé
                 @unlink($tmp); //effacer le fichier temporaire
                 $pochette=$nomPochette.$extension;
-        }
-        else{
-            $dossier="../img/";
         }
 		try{
             if($dateFin>=$dateDebut)
